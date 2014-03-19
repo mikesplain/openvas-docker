@@ -21,14 +21,18 @@ RUN /usr/sbin/openvas-scapdata-sync
 RUN /usr/sbin/openvas-mkcert-client -n om -i >/dev/null 2>&1 || :
 RUN /usr/sbin/openvasmd -f --rebuild >/dev/null 2>&1 || :
 
-RUN /sbin/service openvas-manager restart  >/dev/null 2>&1
+RUN /sbin/service openvas-manager restart  
 RUN /usr/bin/perl -p -i -e "s[^GSA_ADDRESS=.*][GSA_ADDRESS=0.0.0.0]g" /etc/sysconfig/gsad
 RUN /sbin/service gsad restart
 
 # Setup Username and password
-RUN /usr/sbin/openvasad -c add_user -n $USERNAME -r Admin --password=Password
-RUN /usr/sbin/openvas-adduser
+RUN /usr/sbin/openvasad -c add_user -n Admin -r Admin --password=Password
+
+# Startup stuff
+RUN /etc/init.d/openvas-administrator restart
 
 EXPOSE 9392
 
-CMD ["/sbin/service openvas-administrator start"]
+#CMD ["/etc/init.d/openvas-administrator","start", "/etc/init.d/openvas-manager","start", "/etc/init.d/openvas-scanner","start"]
+
+ENTRYPOINT ["/bin/bash"]

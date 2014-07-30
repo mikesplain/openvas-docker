@@ -1,38 +1,91 @@
 # OpenVAS
-# Based on: http://www.openvas.org/install-packages-v5.html#openvas_centos_atomic
+# Based on: http://hackertarget.com/install-openvas-7-ubuntu/
 #
-# VERSION       0.1.0
+# VERSION       1.0.0
 
-FROM centos
+FROM phusion/baseimage
 MAINTAINER Mike Splain mike.splain@gmail.com
 
-RUN wget -q -O - http://www.atomicorp.com/installers/atomic |sh
+RUN apt-get update -y
+RUN apt-get install build-essential bison flex cmake pkg-config libglib2.0-dev libgnutls-dev libpcap0.8-dev libgpgme11 libgpgme11-dev doxygen libuuid1 uuid-dev sqlfairy xmltoman sqlite3 libsqlite3-dev libsqlite3-tcl libxml2-dev libxslt1.1 libxslt1-dev xsltproc libmicrohttpd-dev wget rsync -y
 
-RUN yum update -y
-RUN yum install openvas -y -v
+RUN mkdir openvas-src && \
+    cd openvas-src/ && \
+    wget http://wald.intevation.org/frs/download.php/1638/openvas-libraries-7.0.1.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1640/openvas-scanner-4.0.1.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1637/openvas-manager-5.0.0.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1639/greenbone-security-assistant-5.0.0.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1633/openvas-cli-1.3.0.tar.gz
 
-# Instead of running the below command, lets break it out so we can set the username and password
-#RUN openvas-setup
+RUN cd openvas-src/ && \
+    tar zxvf openvas-libraries-7.0.1.tar.gz && \
+    tar zxvf openvas-scanner-4.0.1.tar.gz && \
+    tar zxvf openvas-manager-5.0.0.tar.gz && \
+    tar zxvf greenbone-security-assistant-5.0.0.tar.gz && \
+    tar zxvf openvas-cli-1.3.0.tar.gz
 
-RUN /usr/sbin/openvas-nvt-sync
-RUN /usr/sbin/openvas-certdata-sync
-RUN /usr/sbin/openvas-scapdata-sync
+RUN cd openvas-src/openvas-libraries-7.0.1 && \
+    mkdir source && \
+    cd source && \
+    cmake .. && \
+    make && \
+    make install
 
-RUN /usr/sbin/openvas-mkcert-client -n om -i >/dev/null 2>&1 || :
-RUN /usr/sbin/openvasmd -f --rebuild >/dev/null 2>&1 || :
+RUN cd openvas-src/openvas-scanner-4.0.1 && \
+    mkdir source && \
+    cd source && \
+    cmake .. && \
+    make && \
+    make install
 
-RUN /sbin/service openvas-manager restart  
-RUN /usr/bin/perl -p -i -e "s[^GSA_ADDRESS=.*][GSA_ADDRESS=0.0.0.0]g" /etc/sysconfig/gsad
-RUN /sbin/service gsad restart
+RUN cd openvas-src/openvas-manager-5.0.0 && \
+    mkdir source && \
+    cd source && \
+    cmake .. && \
+    make && \
+    make install
 
-# Setup Username and password
-RUN /usr/sbin/openvasad -c add_user -n Admin -r Admin --password=Password
+RUN cd openvas-src/greenbone-security-assistant-5.0.0 && \
+    mkdir source && \
+    cd source && \
+    cmake .. && \
+    make && \
+    make install
 
-# Startup stuff
-RUN /etc/init.d/openvas-administrator restart
+RUN cd openvas-src/openvas-cli-1.3.0 && \
+    mkdir source && \
+    cd source && \
+    cmake .. && \
+    make && \
+    make install
 
-EXPOSE 9392
+RUN openvas-mkcert -q
+RUN ldconfig
+RUN openvassd && \
+    openvas-nvt-sync && \
+    openvas-scapdata-sync && \
+    openvas-certdata-sync && \
+    openvas-mkcert-client -n -i && \
+    openvasmd --rebuild --progress && \
+    openvasmd --create-user=admin --role=Admin && \
+    openvasmd --user=admin --new-password=openvas
 
-#CMD ["/etc/init.d/openvas-administrator","start", "/etc/init.d/openvas-manager","start", "/etc/init.d/openvas-scanner","start"]
+# Expose UI
+EXPOSE 443
 
-ENTRYPOINT ["/bin/bash"]
+# Scanner ports
+EXPOSE 9390
+EXPOSE 9391
+
+RUN mkdir /etc/service/gsad && \
+    cd /etc/service/gsad && \
+    wget -O run https://raw.githubusercontent.com/mikesplain/openvas-docker/master/bin/gsad && \
+    chmod 700 run
+RUN mkdir /etc/service/openvassd && \
+    cd /etc/service/openvassd && \
+    wget -O run https://raw.githubusercontent.com/mikesplain/openvas-docker/master/bin/openvassd && \
+    chmod 700 run
+RUN mkdir /etc/service/openvasmd && \
+    cd /etc/service/openvasmd && \
+    wget -O run https://raw.githubusercontent.com/mikesplain/openvas-docker/master/bin/openvasmd && \
+    chmod 700 run

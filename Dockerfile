@@ -1,7 +1,7 @@
 # OpenVAS
 # Based on: http://hackertarget.com/install-openvas-7-ubuntu/
 #
-# VERSION       1.0.1
+# VERSION       1.0.0
 
 FROM phusion/baseimage
 MAINTAINER Mike Splain mike.splain@gmail.com
@@ -11,20 +11,20 @@ RUN apt-get install build-essential bison flex cmake pkg-config libglib2.0-dev l
 
 RUN mkdir openvas-src && \
     cd openvas-src/ && \
-    wget http://wald.intevation.org/frs/download.php/1671/openvas-libraries-7.0.2.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1638/openvas-libraries-7.0.1.tar.gz && \
     wget http://wald.intevation.org/frs/download.php/1640/openvas-scanner-4.0.1.tar.gz && \
-    wget http://wald.intevation.org/frs/download.php/1667/openvas-manager-5.0.2.tar.gz && \
-    wget http://wald.intevation.org/frs/download.php/1675/greenbone-security-assistant-5.0.1.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1637/openvas-manager-5.0.0.tar.gz && \
+    wget http://wald.intevation.org/frs/download.php/1639/greenbone-security-assistant-5.0.0.tar.gz && \
     wget http://wald.intevation.org/frs/download.php/1633/openvas-cli-1.3.0.tar.gz
 
 RUN cd openvas-src/ && \
-    tar zxvf openvas-libraries-7.0.2.tar.gz && \
+    tar zxvf openvas-libraries-7.0.1.tar.gz && \
     tar zxvf openvas-scanner-4.0.1.tar.gz && \
-    tar zxvf openvas-manager-5.0.2.tar.gz && \
-    tar zxvf greenbone-security-assistant-5.0.1.tar.gz && \
+    tar zxvf openvas-manager-5.0.0.tar.gz && \
+    tar zxvf greenbone-security-assistant-5.0.0.tar.gz && \
     tar zxvf openvas-cli-1.3.0.tar.gz
 
-RUN cd openvas-src/openvas-libraries-7.0.2 && \
+RUN cd openvas-src/openvas-libraries-7.0.1 && \
     mkdir source && \
     cd source && \
     cmake .. && \
@@ -38,14 +38,14 @@ RUN cd openvas-src/openvas-scanner-4.0.1 && \
     make && \
     make install
 
-RUN cd openvas-src/openvas-manager-5.0.2 && \
+RUN cd openvas-src/openvas-manager-5.0.0 && \
     mkdir source && \
     cd source && \
     cmake .. && \
     make && \
     make install
 
-RUN cd openvas-src/greenbone-security-assistant-5.0.1 && \
+RUN cd openvas-src/greenbone-security-assistant-5.0.0 && \
     mkdir source && \
     cd source && \
     cmake .. && \

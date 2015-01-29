@@ -79,7 +79,10 @@ RUN apt-get install build-essential \
         cmake .. && \
         make && \
         make install && \
-    rm -rf /openvas-src
+    rm -rf /openvas-src && \
+    apt-get clean -yq &&
+    apt-get autoremove -yq && \
+    apt-get purge -y --auto-remove build-essential cmake
 
 RUN openvas-mkcert -q && \
     ldconfig && \

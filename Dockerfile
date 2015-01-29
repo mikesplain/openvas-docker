@@ -35,7 +35,7 @@ RUN apt-get install build-essential \
                     texlive-latex-base \
                     texlive-latex-recommended \
                     texlive-latex-extra \
-                    nmap -y
+                    nmap -y --no-install-recommends
 
 # New for v8
 RUN apt-get install libhiredis-dev \
@@ -91,9 +91,9 @@ RUN cd openvas-src/openvas-cli-1.4+beta5 && \
     make && \
     make install
 
-RUN openvas-mkcert -q
-RUN ldconfig
-RUN openvassd && \
+RUN openvas-mkcert -q && \
+    ldconfig && \
+    openvassd && \
     openvas-nvt-sync && \
     openvas-scapdata-sync && \
     openvas-certdata-sync && \
@@ -120,6 +120,7 @@ ADD bin/openvasmd /etc/service/openvasmd/run
 RUN wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
 
 RUN mkdir -p /etc/my_init.d
-ADD bin/rebuild.sh /etc/my_init.d/rebuild.sh
+ADD bin/rebuild_service.sh /etc/my_init.d/rebuild_service.sh
+ADD bin/rebuild.sh /usr/local/bin/rebuid.sh
 
-RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild.sh
+RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild_service.sh /usr/local/bin/rebuid.sh

@@ -35,7 +35,7 @@ RUN apt-get install build-essential \
                     texlive-latex-base \
                     texlive-latex-recommended \
                     texlive-latex-extra \
-                    nmap -y
+                    nmap -y --no-install-recommends
 
 RUN mkdir openvas-src && \
     cd openvas-src/ && \
@@ -87,9 +87,9 @@ RUN cd openvas-src/openvas-cli-1.3.1 && \
     make && \
     make install
 
-RUN openvas-mkcert -q
-RUN ldconfig
-RUN openvassd && \
+RUN openvas-mkcert -q && \
+    ldconfig && \
+    openvassd && \
     openvas-nvt-sync && \
     openvas-scapdata-sync && \
     openvas-certdata-sync && \

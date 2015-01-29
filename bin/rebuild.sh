@@ -1,3 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-exec openvasmd --rebuild&
+while true; do
+    echo "Waiting..."
+    sleep 3
+
+    if [ -z "$(ps aux | grep ETA | grep -v grep)" ]; then
+        echo "Ready to start openvasmd rebuild..."
+        openvasmd --rebuild&
+        disown $!
+        break
+    fi
+done

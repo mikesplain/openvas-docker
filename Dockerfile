@@ -116,6 +116,7 @@ ADD bin/openvasmd /etc/service/openvasmd/run
 RUN wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
 
 RUN mkdir -p /etc/my_init.d
-ADD bin/rebuild.sh /etc/my_init.d/rebuild.sh
+ADD bin/rebuild_service.sh /etc/my_init.d/rebuild_service.sh
+ADD bin/rebuild.sh /usr/local/bin/rebuid.sh
 
-RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild.sh
+RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild_service.sh /usr/local/bin/rebuid.sh

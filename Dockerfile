@@ -80,7 +80,7 @@ RUN apt-get install build-essential \
         make && \
         make install && \
     rm -rf /openvas-src && \
-    apt-get clean -yq &&
+    apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake
 

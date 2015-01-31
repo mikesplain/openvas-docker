@@ -84,24 +84,6 @@ RUN apt-get install build-essential \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake
 
-RUN openvas-mkcert -q && \
-    ldconfig && \
-    openvassd && \
-    openvas-nvt-sync && \
-    openvas-scapdata-sync && \
-    openvas-certdata-sync && \
-    openvas-mkcert-client -n -i && \
-    openvasmd --rebuild --progress && \
-    openvasmd --create-user=admin --role=Admin && \
-    openvasmd --user=admin --new-password=openvas
-
-# Expose UI
-EXPOSE 443
-
-# Scanner ports
-EXPOSE 9390
-EXPOSE 9391
-
 RUN mkdir /etc/service/gsad && \
     mkdir /etc/service/openvassd && \
     mkdir /etc/service/openvasmd
@@ -115,5 +97,13 @@ RUN wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-s
 RUN mkdir -p /etc/my_init.d
 ADD bin/rebuild_service.sh /etc/my_init.d/rebuild_service.sh
 ADD bin/rebuild.sh /usr/local/bin/rebuid.sh
+ADD bin/setup.sh /etc/my_init.d/000_setup.sh
 
-RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild_service.sh /usr/local/bin/rebuid.sh
+RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild_service.sh /usr/local/bin/rebuid.sh /etc/my_init.d/000_setup.sh
+
+# Expose UI
+EXPOSE 443
+
+# Scanner ports
+EXPOSE 9390
+EXPOSE 9391

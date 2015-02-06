@@ -2,6 +2,12 @@ machine:
   services:
     - docker
 
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+
 test:
   override:
     - docker build -t mikesplain/openvas:base openvas_base:
@@ -14,4 +20,5 @@ test:
         timeout: 240
     - docker exec $(docker ps -q) ./openvas-check-setup:
         timeout: 500
-    
+  post:
+    - mkdir -p ~/docker; docker save mikesplain/openvas > ~/docker/image.tar

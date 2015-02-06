@@ -8,7 +8,7 @@ dependencies:
   override:
     - mkdir -p ~/docker
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
-    - curl -o ~/.ssh/insecure_key -fSL https://github.com/phusion/baseimage-docker/raw/master/image/insecure_key; chmod 600 ~/.ssh/insecure_key
+    - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
 
 test:
   override:
@@ -22,7 +22,7 @@ test:
         timeout: 900
     - sleep 3m:
         timeout: 240
-    - ssh -i ~/.ssh/insecure_key root@$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $(docker ps -q)) ./openvas-check-setup:
+    - docker-ssh $(docker ps -q) ./openvas-check-setup:
         timeout: 900
 
   post:

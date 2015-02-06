@@ -8,5 +8,10 @@ test:
         timeout: 900
     - docker build -t mikesplain/openvas:full openvas_full:
         timeout: 900
-    - docker run -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:full sleep 3m && ./openvas-check-setup:
+    - docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:full:
         timeout: 900
+    - sleep 3m:
+        timeout: 240
+    - docker exec $(docker ps -q) ./openvas-check-setup:
+        timeout: 500
+    

@@ -63,7 +63,7 @@ If at any point you believe NVTs and/or Certs need to be updated, please put in 
 # Fork Repo and git clone
 
 git checkout -b update_nvts_and_certs
-echo `date` >> build
+echo `date` > build
 git commit -am "Please update NVTs and Certs"
 git push
 

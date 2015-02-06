@@ -1,0 +1,10 @@
+machine:
+  services:
+    - docker
+
+test:
+  override:
+    - docker build -t mikesplain/openvas:base openvas_base:
+        timeout: 900
+    - docker build -t mikesplain/openvas:base openvas_full:
+        timeout: 900

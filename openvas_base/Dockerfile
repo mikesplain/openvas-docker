@@ -38,18 +38,18 @@ RUN apt-get install build-essential \
                     nmap -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
-        wget http://wald.intevation.org/frs/download.php/1833/openvas-libraries-7.0.6.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/1907/openvas-libraries-7.0.7.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1844/openvas-scanner-4.0.5.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/1849/openvas-manager-5.0.7.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/1799/greenbone-security-assistant-5.0.4.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/1911/openvas-manager-5.0.8.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/1915/greenbone-security-assistant-5.0.5.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1803/openvas-cli-1.3.1.tar.gz && \
     cd /openvas-src/ && \
-        tar zxvf openvas-libraries-7.0.6.tar.gz && \
+        tar zxvf openvas-libraries-7.0.7.tar.gz && \
         tar zxvf openvas-scanner-4.0.5.tar.gz && \
-        tar zxvf openvas-manager-5.0.7.tar.gz && \
-        tar zxvf greenbone-security-assistant-5.0.4.tar.gz && \
+        tar zxvf openvas-manager-5.0.8.tar.gz && \
+        tar zxvf greenbone-security-assistant-5.0.5.tar.gz && \
         tar zxvf openvas-cli-1.3.1.tar.gz && \
-    cd /openvas-src/openvas-libraries-7.0.6 && \
+    cd /openvas-src/openvas-libraries-7.0.7 && \
         mkdir source && \
         cd source && \
         cmake .. && \
@@ -61,13 +61,13 @@ RUN apt-get install build-essential \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/openvas-manager-5.0.7 && \
+    cd /openvas-src/openvas-manager-5.0.8 && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/greenbone-security-assistant-5.0.4 && \
+    cd /openvas-src/greenbone-security-assistant-5.0.5 && \
         mkdir source && \
         cd source && \
         cmake .. && \

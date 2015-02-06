@@ -6,6 +6,7 @@ dependencies:
   cache_directories:
     - "~/docker"
   override:
+    - mkdir -p ~/docker
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
     - curl -o ~/.ssh/insecure_key -fSL https://github.com/phusion/baseimage-docker/raw/master/image/insecure_key; chmod 600 ~/.ssh/insecure_key
 

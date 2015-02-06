@@ -7,6 +7,7 @@ dependencies:
     - "~/docker"
   override:
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - curl -o ~/.ssh/insecure_key -fSL https://github.com/phusion/baseimage-docker/raw/master/image/insecure_key; chmod 600 ~/.ssh/insecure_key
 
 test:
   override:
@@ -14,11 +15,14 @@ test:
         timeout: 900
     - docker build -t mikesplain/openvas:full openvas_full:
         timeout: 900
-    - docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:full:
+    - docker build -t mikesplain/openvas:test test:
+        timeout: 900
+    - docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:test:
         timeout: 900
     - sleep 3m:
         timeout: 240
-    - docker exec $(docker ps -q) ./openvas-check-setup:
-        timeout: 500
+    - ssh -i ~/.ssh/insecure_key root@$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $(docker ps -q)) ./openvas-check-setup:
+        timeout: 900
+
   post:
     - mkdir -p ~/docker; docker save mikesplain/openvas > ~/docker/image.tar

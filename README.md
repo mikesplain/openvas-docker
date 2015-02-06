@@ -1,6 +1,8 @@
 OpenVAS image for Docker
 ==============
 
+[![Circle CI](https://circleci.com/gh/mikesplain/openvas-docker.svg?style=svg)](https://circleci.com/gh/mikesplain/openvas-docker)
+
 A Docker container for OpenVAS 7 on the Ubuntu 14.04 phusion/baseimage.  By default, the latest images includes the OpenVAS Base as well as the NVTs and Certs required to run OpenVAS.  We also package a version without NVTs and Certs if you want to sync them in realtime.
 
 Requirements

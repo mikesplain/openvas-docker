@@ -6,5 +6,7 @@ test:
   override:
     - docker build -t mikesplain/openvas:base openvas_base:
         timeout: 900
-    - docker build -t mikesplain/openvas:base openvas_full:
+    - docker build -t mikesplain/openvas:full openvas_full:
+        timeout: 900
+    - docker run -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:full sleep 3m && ./openvas-check-setup:
         timeout: 900

@@ -9,15 +9,14 @@ dependencies:
     - mkdir -p ~/docker
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
-
-test:
-  override:
     - docker build -t mikesplain/openvas:base openvas_base:
         timeout: 900
     - docker build -t mikesplain/openvas:full openvas_full:
         timeout: 1200
     - make testcontainers:
         timeout: 900
+test:
+  override:
     - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:
         parallel: true
 

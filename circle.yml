@@ -16,14 +16,10 @@ test:
         timeout: 900
     - docker build -t mikesplain/openvas:full openvas_full:
         timeout: 1200
-    - docker build -t mikesplain/openvas:test test:
+    - make testcontainers:
         timeout: 900
-    - docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas:test:
-        timeout: 900
-    - sleep 3m:
-        timeout: 240
-    - docker-ssh $(docker ps -q) /openvas-check-setup:
-        timeout: 900
+    - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:
+        parallel: true
 
   post:
     - mkdir -p ~/docker; docker save mikesplain/openvas > ~/docker/image.tar

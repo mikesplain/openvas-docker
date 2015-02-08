@@ -16,11 +16,11 @@ dependencies:
         timeout: 1200
     - make testcontainers:
         timeout: 900
+  post:
+    - docker save mikesplain/openvas > ~/docker/image.tar
+
 test:
   override:
     - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:
         parallel: true
         timeout: 1200
-
-  post:
-    - docker save mikesplain/openvas > ~/docker/image.tar

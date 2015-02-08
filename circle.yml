@@ -5,20 +5,21 @@ machine:
 dependencies:
   cache_directories:
     - "~/docker"
+  pre:
+    - if [[ ! -e ~/docker ]]; then mkdir -p ~/docker; fi
   override:
-    - mkdir -p ~/docker
-    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi:
+        timeout: 600
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
     - docker build -t mikesplain/openvas:base openvas_base:
         timeout: 900
-    - docker build -t mikesplain/openvas:full openvas_full:
-        timeout: 1200
-    - make testcontainers:
-        timeout: 900
+  post:
+    - docker save mikesplain/openvas > ~/docker/image.tar
+
 test:
   override:
     - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:
         parallel: true
-
+        timeout: 1200
   post:
-    - mkdir -p ~/docker; docker save mikesplain/openvas > ~/docker/image.tar
+    - make cleanup

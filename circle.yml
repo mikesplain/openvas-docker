@@ -5,8 +5,9 @@ machine:
 dependencies:
   cache_directories:
     - "~/docker"
+  pre:
+    - if [[ ! -e ~/docker ]]; then mkdir -p ~/docker; fi
   override:
-    - mkdir -p ~/docker
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
     - docker build -t mikesplain/openvas:base openvas_base:
@@ -22,4 +23,4 @@ test:
         timeout: 1200
 
   post:
-    - mkdir -p ~/docker; docker save mikesplain/openvas > ~/docker/image.tar
+    - docker save mikesplain/openvas > ~/docker/image.tar

@@ -37,7 +37,7 @@ testfull:
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name testfull mikesplain/openvas:testfull
 	sleep 180
 	docker-ssh testfull /openvas-check-setup >> ~/check_setup.log
-	if grep 'It seems like your OpenVAS-7 installation is OK' ~/check_setup.log; do \
+	if grep -E 'It seems like your OpenVAS-7 installation is OK' ~/check_setup.log; do \
 		echo "Setup Successfully!" ; \
 	else \
 		echo "Setup failure" ; \

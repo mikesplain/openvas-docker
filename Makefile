@@ -18,7 +18,7 @@ testcontainers:
 
 testbase:
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name testbase mikesplain/openvas:testbase
-	until docker logs --tail 50 testbase | grep -E 'User created with password'; do \
+	until docker logs --tail 50 testbase | grep -E 'Data Base Updated'; do \
 		echo "Waiting for script completion..." ; \
 		sleep 30 ; \
 	done

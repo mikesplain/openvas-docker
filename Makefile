@@ -22,7 +22,7 @@ testbase:
 	docker build -t mikesplain/openvas:testbase ./test
 	sed -i -e 's/base/TAG/g' ./test/Dockerfile
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name testbase mikesplain/openvas:testbase
-	until docker logs --tail 50 testbase | grep -E 'Data Base Updated'; do \
+	until docker logs --tail 50 testbase 2>&1 | grep -E 'Data Base Updated'; do \
 		echo "Waiting for script completion..." ; \
 		sleep 30 ; \
 	done

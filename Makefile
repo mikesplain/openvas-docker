@@ -28,7 +28,10 @@ testbase:
 	done
 	echo "Done."
 	echo "Waiting for startup to complete."
-	sleep 180
+	sleep 300
+	echo "Testbase logs:"
+	docker logs --tail 50 testbase 2>&1
+	echo "Attempting login"
 	docker-ssh testbase /openvas-check-setup >> ~/check_setup.log
 	if grep -E 'It seems like your OpenVAS-7 installation is OK' ~/check_setup.log; \
 	then \

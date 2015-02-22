@@ -35,6 +35,7 @@ RUN apt-get install build-essential \
                     texlive-latex-base \
                     texlive-latex-recommended \
                     texlive-latex-extra \
+                    unzip \
                     nmap -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
@@ -82,7 +83,15 @@ RUN apt-get install build-essential \
     rm -rf /openvas-src && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake
+    apt-get purge -y --auto-remove build-essential cmake && \
+    cd ~ && \
+    wget https://github.com/sullo/nikto/archive/master.zip && \
+    unzip master.zip -d /tmp && \
+    mv /tmp/nikto-master/program /opt/nikto && \
+    rm -rf /tmp/nikto-master && \
+    echo "EXECDIR=/opt/nikto\nPLUGINDIR=/opt/nikto/plugins\nDBDIR=/opt/nikto/databases\nTEMPLATEDIR=/opt/nikto/templates\nDOCDIR=/opt/nikto/docs" >> /opt/nikto/nikto.conf && \
+    ln -s /opt/nikto/nikto.pl /usr/local/bin/nikto.pl && \
+    ln -s /opt/nikto/nikto.conf /etc/nikto.conf
 
 RUN mkdir /etc/service/gsad && \
     mkdir /etc/service/openvassd && \

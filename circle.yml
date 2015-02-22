@@ -15,6 +15,7 @@ dependencies:
         timeout: 900
   post:
     - docker save mikesplain/openvas > ~/docker/image.tar
+    - cp ~/docker/image.tar $CIRCLE_ARTIFACTS
 
 test:
   override:

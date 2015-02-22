@@ -28,6 +28,7 @@ RUN apt-get install build-essential \
                     libxml2-dev \
                     libxslt1.1 \
                     libxslt1-dev \
+                    libcurl4-gnutls-dev \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \
@@ -81,6 +82,17 @@ RUN apt-get install build-essential \
         make && \
         make install && \
     rm -rf /openvas-src && \
+    mkdir /dirb && \
+    cd /dirb && \
+    wget http://downloads.sourceforge.net/project/dirb/dirb/2.22/dirb222.tar.gz && \
+        tar -zxvf dirb222.tar.gz && \
+        cd dirb222 && \
+        chmod 700 -R * && \
+        ./configure && \
+        make && \
+        make install && \
+    cd / && \
+    rm -rf /dirb && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake && \

@@ -21,7 +21,7 @@ testbase:
 	sed -i -e 's/TAG/base/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testbase ./test
 	sed -i -e 's/base/TAG/g' ./test/Dockerfile
-	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name testbase mikesplain/openvas:testbase
+	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testbase mikesplain/openvas:testbase
 	until docker logs --tail 50 testbase 2>&1 | grep -E 'Data Base Updated'; do \
 		echo "Waiting for script completion..." ; \
 		sleep 30 ; \
@@ -42,10 +42,15 @@ testbase:
 	fi
 
 testfull:
+	cp -R ~/openvas openvas_full/
+	sed -i~ '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
+	sed -i -e '14,15d' openvas_full/Dockerfile
+	sed -i~ '13s/ \&\& \\//' openvas_full/Dockerfile
 	docker build -t mikesplain/openvas:full openvas_full
+	git checkout openvas_full/Dockerfile
 	sed -i -e 's/TAG/full/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testfull ./test
-	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name testfull mikesplain/openvas:testfull
+	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testfull mikesplain/openvas:testfull
 	sleep 180
 	docker-ssh testfull /openvas-check-setup >> ~/check_setup.log
 	if grep -E 'It seems like your OpenVAS-7 installation is OK' ~/check_setup.log; \
@@ -62,3 +67,5 @@ cleanup:
 	sed -i -e 's/base/TAG/g' ./test/Dockerfile
 	sed -i -e 's/full/TAG/g' ./test/Dockerfile
 	rm -rf ./test/Dockerfile-e
+	rm -rf openvas_full/Dockerfile~
+	rm -rf openvas_full/openvas

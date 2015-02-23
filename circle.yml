@@ -5,8 +5,10 @@ machine:
 dependencies:
   cache_directories:
     - "~/docker"
+    - "~/openvas"
   pre:
     - if [[ ! -e ~/docker ]]; then mkdir -p ~/docker; fi
+    - if [[ ! -e ~/openvas ]]; then cd ~ && wget http://s3.mikespla.in/openvas/data.tar.gz && tar -zxvf data.tar.gz && rm -rf data.tar.gz; fi
   override:
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi:
         timeout: 600

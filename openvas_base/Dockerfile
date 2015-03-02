@@ -92,7 +92,6 @@ RUN apt-get install build-essential \
         make && \
         make install && \
     cd / && \
-    rm -rf /dirb && \
     cd /tmp && \
     wget http://downloads.arachni-scanner.com/arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \
         tar -zxvf arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \

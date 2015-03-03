@@ -1,4 +1,4 @@
-FROM mikesplain/openvas:base
+FROM mikesplain/openvas_base
 MAINTAINER Mike Splain mike.splain@gmail.com
 
 RUN rm -rf /etc/my_init.d/000_setup.sh

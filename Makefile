@@ -6,7 +6,7 @@ test: containers testcontainers
 
 
 containers:
-	docker build -t mikesplain/openvas:base openvas_base
+	docker build -t mikesplain/openvas_base openvas_base
 	docker build -t mikesplain/openvas:full openvas_full
 
 testcontainers:
@@ -17,7 +17,7 @@ testcontainers:
 	sed -i -e 's/full/TAG/g' ./test/Dockerfile
 
 testbase:
-	docker build -t mikesplain/openvas:base openvas_base
+	docker build -t mikesplain/openvas_base openvas_base
 	sed -i -e 's/TAG/base/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testbase ./test
 	sed -i -e 's/base/TAG/g' ./test/Dockerfile

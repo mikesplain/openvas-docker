@@ -96,7 +96,7 @@ RUN apt-get install build-essential \
     wget http://downloads.arachni-scanner.com/arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \
         tar -zxvf arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \
         mv arachni-1.0.6-0.5.6 /opt/arachni && \
-        ln -s /opt/arachni/bin/arachni /usr/local/bin/arachni && \
+        ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake && \

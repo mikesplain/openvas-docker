@@ -5,7 +5,7 @@ echo "Starting setup..."
 openvas-mkcert -q
 ldconfig
 openvassd
-openvas-nvt-sync --migrate-to-private
+openvas-nvt-sync
 openvas-scapdata-sync
 openvas-certdata-sync
 openvas-mkcert-client -n -i

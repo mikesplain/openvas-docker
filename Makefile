@@ -10,9 +10,9 @@ containers:
 	docker build -t mikesplain/openvas:full openvas_full
 
 testcontainers:
-	sed -i -e 's/TAG/base/g' ./test/Dockerfile
+	sed -i -e 's/TAG/openvas_base/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testbase ./test
-	sed -i -e 's/base/full/g' ./test/Dockerfile
+	sed -i -e 's/openvas_base/openvas:full/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testfull ./test
 	sed -i -e 's/full/TAG/g' ./test/Dockerfile
 

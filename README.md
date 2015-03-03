@@ -15,9 +15,9 @@ Usage
 
 There are now a number of OpenVAS 7 images you can choose from:
 - mikesplain/openvas_base => Just executables. Will download certs and NVTs at start.
-- mikesplain/openvas:full => Base + NVTs and Certs.
-- mikesplain/openvas:latest => mikesplain/openvas:full
+- mikesplain/openvas => Base + NVTs and Certs.
 
+Note: This was recently changed to force base updates and improve container linking.  We are now utilizing 2 docker hub repos rather than 1.
 
 
 Simply run:
@@ -50,7 +50,7 @@ docker exec -it <container id> bash
 Image Notes
 -----
 
-This image was recently updated into 2 main versions.  The base build sets up OpenVAS in a condensed format to make it quicker to download.  It also creates neccessary scripts for startup to start NVT and Cert syncing.
+This image was recently updated into 2 main versions.  The base build sets up OpenVAS in a condensed format to make it quicker to download.  It also creates necessary scripts for startup to start NVT and Cert syncing.
 
 With that in mind, syncing of data occurs via wget, curl and rsync.  In certain environments, one or many of those connections may not be possible.  For these cases, we also build the "full" version of OpenVAS which includes the needed NVTs and Certs. Docker compressions of images really helps here and compresses nearly 1 GB of images into ~150 MB.
 

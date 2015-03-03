@@ -13,7 +13,7 @@ dependencies:
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi:
         timeout: 600
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
-    - docker build -t mikesplain/openvas_base openvas_base:
+    - docker build --no-cache -t mikesplain/openvas_base openvas_base:
         timeout: 900
   post:
     - docker save mikesplain/openvas > ~/docker/image.tar

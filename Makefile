@@ -6,20 +6,20 @@ test: containers testcontainers
 
 
 containers:
-	docker build --no-cache -t mikesplain/openvas_base openvas_base
-	docker build --no-cache -t mikesplain/openvas:full openvas_full
+	docker build -t mikesplain/openvas_base openvas_base
+	docker build -t mikesplain/openvas:full openvas_full
 
 testcontainers:
 	sed -i -e 's/TAG/base/g' ./test/Dockerfile
-	docker build --no-cache -t mikesplain/openvas:testbase ./test
+	docker build -t mikesplain/openvas:testbase ./test
 	sed -i -e 's/base/full/g' ./test/Dockerfile
-	docker build --no-cache -t mikesplain/openvas:testfull ./test
+	docker build -t mikesplain/openvas:testfull ./test
 	sed -i -e 's/full/TAG/g' ./test/Dockerfile
 
 testbase:
-	docker build --no-cache -t mikesplain/openvas_base openvas_base
+	docker build -t mikesplain/openvas_base openvas_base
 	sed -i -e 's/TAG/base/g' ./test/Dockerfile
-	docker build --no-cache -t mikesplain/openvas:testbase ./test
+	docker build -t mikesplain/openvas:testbase ./test
 	sed -i -e 's/base/TAG/g' ./test/Dockerfile
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testbase mikesplain/openvas:testbase
 	until docker logs --tail 50 testbase 2>&1 | grep -E 'Data Base Updated'; do \
@@ -46,10 +46,10 @@ testfull:
 	sed -i~ '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
 	sed -i -e '14,15d' openvas_full/Dockerfile
 	sed -i~ '13s/ \&\& \\//' openvas_full/Dockerfile
-	docker build --no-cache -t mikesplain/openvas:full openvas_full
+	docker build -t mikesplain/openvas:full openvas_full
 	git checkout openvas_full/Dockerfile
 	sed -i -e 's/TAG/full/g' ./test/Dockerfile
-	docker build --no-cache -t mikesplain/openvas:testfull ./test
+	docker build -t mikesplain/openvas:testfull ./test
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testfull mikesplain/openvas:testfull
 	sleep 180
 	docker-ssh testfull /openvas-check-setup >> ~/check_setup.log

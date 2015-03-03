@@ -14,7 +14,7 @@ Usage
 -----
 
 There are now a number of OpenVAS 7 images you can choose from:
-- mikesplain/openvas:base => Just executables. Will download certs and NVTs at start.
+- mikesplain/openvas_base => Just executables. Will download certs and NVTs at start.
 - mikesplain/openvas:full => Base + NVTs and Certs.
 - mikesplain/openvas:latest => mikesplain/openvas:full
 

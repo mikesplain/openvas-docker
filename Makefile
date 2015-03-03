@@ -6,7 +6,7 @@ test: containers testcontainers
 
 
 containers:
-	docker build -t mikesplain/openvas:base openvas_base
+	docker build -t mikesplain/openvas_base openvas_base
 	docker build -t mikesplain/openvas:full openvas_full
 
 testcontainers:
@@ -17,10 +17,9 @@ testcontainers:
 	sed -i -e 's/full/TAG/g' ./test/Dockerfile
 
 testbase:
-	docker build -t mikesplain/openvas:base openvas_base
-	sed -i -e 's/TAG/base/g' ./test/Dockerfile
+	sed -i -e 's/TAG/openvas_base/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testbase ./test
-	sed -i -e 's/base/TAG/g' ./test/Dockerfile
+	sed -i -e 's/openvas_base/TAG/g' ./test/Dockerfile
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testbase mikesplain/openvas:testbase
 	until docker logs --tail 50 testbase 2>&1 | grep -E 'Data Base Updated'; do \
 		echo "Waiting for script completion..." ; \
@@ -48,7 +47,7 @@ testfull:
 	sed -i~ '13s/ \&\& \\//' openvas_full/Dockerfile
 	docker build -t mikesplain/openvas:full openvas_full
 	git checkout openvas_full/Dockerfile
-	sed -i -e 's/TAG/full/g' ./test/Dockerfile
+	sed -i -e 's/TAG/openvas:full/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testfull ./test
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testfull mikesplain/openvas:testfull
 	sleep 180
@@ -64,8 +63,8 @@ testfull:
 clean: cleanup
 
 cleanup:
-	sed -i -e 's/base/TAG/g' ./test/Dockerfile
-	sed -i -e 's/full/TAG/g' ./test/Dockerfile
+	sed -i -e 's/openvas_base/TAG/g' ./test/Dockerfile
+	sed -i -e 's/openvas:full/TAG/g' ./test/Dockerfile
 	rm -rf ./test/Dockerfile-e
 	rm -rf openvas_full/Dockerfile~
 	rm -rf openvas_full/openvas

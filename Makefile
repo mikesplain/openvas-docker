@@ -27,7 +27,22 @@ testbase:
 	done
 	echo "Done."
 	echo "Waiting for startup to complete."
-	sleep 300
+	until ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
+	echo "NVTs loading. Waiting to complete"
+	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
+	echo "NVTs done loading. Resting a moment"
+	sleep 2
+	echo "Rebuilding."
+	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
 	echo "Testbase logs:"
 	docker logs --tail 50 testbase 2>&1
 	echo "Attempting login"
@@ -50,7 +65,23 @@ testfull:
 	sed -i -e 's/TAG/openvas:full/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testfull ./test
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testfull mikesplain/openvas:testfull
-	sleep 180
+	echo "Waiting for startup to complete."
+	until ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
+	echo "NVTs loading. Waiting to complete"
+	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
+	echo "NVTs done loading. Resting a moment"
+	sleep 2
+	echo "Rebuilding."
+	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
+		echo "." ; \
+		sleep 2 ; \
+	done
 	docker-ssh testfull /openvas-check-setup >> ~/check_setup.log
 	if grep -E 'It seems like your OpenVAS-7 installation is OK' ~/check_setup.log; \
 	then \

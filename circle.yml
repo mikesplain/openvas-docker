@@ -4,21 +4,13 @@ machine:
 
 dependencies:
   cache_directories:
-    - "~/docker"
     - "~/openvas"
   pre:
-    - if [[ ! -e ~/docker ]]; then mkdir -p ~/docker; fi
     - if [[ ! -e ~/openvas ]]; then cd ~ && wget http://s3.mikespla.in/openvas/data.tar.gz && tar -zxvf data.tar.gz && rm -rf data.tar.gz; fi
   override:
-    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi:
-        timeout: 600
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
     - docker build --no-cache -t mikesplain/openvas_base openvas_base:
         timeout: 900
-  post:
-    - docker save mikesplain/openvas > ~/docker/image.tar
-    - cp ~/docker/image.tar $CIRCLE_ARTIFACTS
-
 test:
   override:
     - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:

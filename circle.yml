@@ -6,7 +6,7 @@ dependencies:
   cache_directories:
     - "~/openvas"
   pre:
-    - if [[ ! -e ~/openvas ]]; then cd ~ && wget http://s3.mikespla.in/openvas/data.tar.gz && tar -zxvf data.tar.gz && rm -rf data.tar.gz; fi
+    - if [[ ! -d ~/openvas ]]; then cd ~ && wget http://s3.mikespla.in/openvas/data.tar.gz && tar -zxvf data.tar.gz && rm -rf data.tar.gz; fi
   override:
     - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
     - docker build --no-cache -t mikesplain/openvas_base openvas_base:

@@ -37,6 +37,7 @@ RUN apt-get install build-essential \
                     texlive-latex-recommended \
                     texlive-latex-extra \
                     unzip \
+                    wapiti \
                     nmap -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \

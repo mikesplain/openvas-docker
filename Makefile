@@ -32,7 +32,7 @@ testbase:
 		sleep 2 ; \
 	done
 	echo "NVTs loading. Waiting to complete"
-	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	while ps aux | grep -v grep | grep -v 'openvassd: Reloaded all the NVTs' | grep -E 'openvassd: Reloaded' ; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
@@ -71,7 +71,7 @@ testfull:
 		sleep 2 ; \
 	done
 	echo "NVTs loading. Waiting to complete"
-	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	while ps aux | grep -v grep | grep -v 'openvassd: Reloaded all the NVTs' | grep -E 'openvassd: Reloaded'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done

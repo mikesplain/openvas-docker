@@ -57,9 +57,9 @@ testbase:
 
 testfull:
 	cp -R ~/openvas openvas_full/
-	sed -i~ '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
+	sed -i '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
 	sed -i -e '14,15d' openvas_full/Dockerfile
-	sed -i~ '13s/ \&\& \\//' openvas_full/Dockerfile
+	sed -i '13s/ \&\& \\//' openvas_full/Dockerfile
 	docker build -t mikesplain/openvas:full openvas_full
 	git checkout openvas_full/Dockerfile
 	sed -i -e 's/TAG/openvas:full/g' ./test/Dockerfile

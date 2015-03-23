@@ -33,7 +33,7 @@ testbase:
 	done
 	echo "NVTs loading. Waiting to complete"
 	echo "NVTs done loading. Resting a moment"
-	sleep 2
+	sleep 5
 	echo "Rebuilding."
 	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
 		echo "." ; \
@@ -65,7 +65,7 @@ testfull:
 		sleep 2 ; \
 	done
 	echo "NVTs done loading. Resting a moment"
-	sleep 2
+	sleep 5
 	echo "Rebuilding."
 	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
 		echo "." ; \

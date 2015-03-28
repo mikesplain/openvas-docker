@@ -3,7 +3,7 @@ MAINTAINER Mike Splain mike.splain@gmail.com
 
 RUN rm -rf /etc/my_init.d/000_setup.sh
 
-RUN openvas-mkcert -q && \
+RUN openvas-mkcert -f -q && \
     ldconfig && \
     openvassd && \
     openvas-nvt-sync && \

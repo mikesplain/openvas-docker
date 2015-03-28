@@ -27,19 +27,19 @@ testbase:
 	done
 	echo "Done."
 	echo "Waiting for startup to complete."
-	until ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	until docker-ssh testbase ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
 	echo "NVTs loading. Waiting to complete"
-	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	while docker-ssh testbase ps aux | grep -v grep | grep -v 'openvassd: Reloaded all the NVTs' | grep -E 'openvassd: Reloaded' ; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
 	echo "NVTs done loading. Resting a moment"
 	sleep 2
 	echo "Rebuilding."
-	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
+	while docker-ssh testbase ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
@@ -57,28 +57,28 @@ testbase:
 
 testfull:
 	cp -R ~/openvas openvas_full/
-	sed -i~ '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
+	sed -i '3s/^/ADD openvas \/usr\/local\/var\/lib\/openvas/' openvas_full/Dockerfile
 	sed -i -e '14,15d' openvas_full/Dockerfile
-	sed -i~ '13s/ \&\& \\//' openvas_full/Dockerfile
+	sed -i '13s/ \&\& \\//' openvas_full/Dockerfile
 	docker build -t mikesplain/openvas:full openvas_full
 	git checkout openvas_full/Dockerfile
 	sed -i -e 's/TAG/openvas:full/g' ./test/Dockerfile
 	docker build -t mikesplain/openvas:testfull ./test
 	docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 -v $(HOME)/openvas:/usr/local/var/lib/openvas --name testfull mikesplain/openvas:testfull
 	echo "Waiting for startup to complete."
-	until ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	until docker-ssh testfull ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
 	echo "NVTs loading. Waiting to complete"
-	while ps aux | grep -v grep | grep -E 'openvassd: Reloaded'; do \
+	while docker-ssh testfull ps aux | grep -v grep | grep -v 'openvassd: Reloaded all the NVTs' | grep -E 'openvassd: Reloaded'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done
 	echo "NVTs done loading. Resting a moment"
 	sleep 2
 	echo "Rebuilding."
-	while ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
+	while docker-ssh testfull ps aux | grep -v grep | grep -E 'openvasmd: Rebuilding'; do \
 		echo "." ; \
 		sleep 2 ; \
 	done

@@ -15,5 +15,6 @@ openvasmd --user=admin --new-password=openvas
 
 # At this point, usually openvassd locks up so lets kill it
 ps aux | grep openvassd| awk '{print $2}' |xargs kill -9
+ps aux | grep openvassmd| awk '{print $2}' |xargs kill -9
 
 echo "Finished setup..."

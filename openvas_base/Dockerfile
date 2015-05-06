@@ -41,18 +41,18 @@ RUN apt-get install build-essential \
                     nmap -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
-        wget http://wald.intevation.org/frs/download.php/1971/openvas-libraries-7.0.9.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2031/openvas-libraries-7.0.10.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1959/openvas-scanner-4.0.6.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/1963/openvas-manager-5.0.9.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/1967/greenbone-security-assistant-5.0.6.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2035/openvas-manager-5.0.10.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2039/greenbone-security-assistant-5.0.7.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1803/openvas-cli-1.3.1.tar.gz && \
     cd /openvas-src/ && \
-        tar zxvf openvas-libraries-7.0.9.tar.gz && \
+        tar zxvf openvas-libraries-7.0.10.tar.gz && \
         tar zxvf openvas-scanner-4.0.6.tar.gz && \
-        tar zxvf openvas-manager-5.0.9.tar.gz && \
-        tar zxvf greenbone-security-assistant-5.0.6.tar.gz && \
+        tar zxvf openvas-manager-5.0.10.tar.gz && \
+        tar zxvf greenbone-security-assistant-5.0.7.tar.gz && \
         tar zxvf openvas-cli-1.3.1.tar.gz && \
-    cd /openvas-src/openvas-libraries-7.0.9 && \
+    cd /openvas-src/openvas-libraries-7.0.10 && \
         mkdir source && \
         cd source && \
         cmake .. && \
@@ -64,13 +64,13 @@ RUN apt-get install build-essential \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/openvas-manager-5.0.9 && \
+    cd /openvas-src/openvas-manager-5.0.10 && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/greenbone-security-assistant-5.0.6 && \
+    cd /openvas-src/greenbone-security-assistant-5.0.7 && \
         mkdir source && \
         cd source && \
         cmake .. && \
@@ -94,9 +94,9 @@ RUN apt-get install build-essential \
         make install && \
     cd / && \
     cd /tmp && \
-    wget http://downloads.arachni-scanner.com/arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \
-        tar -zxvf arachni-1.0.6-0.5.6-linux-x86_64.tar.gz && \
-        mv arachni-1.0.6-0.5.6 /opt/arachni && \
+    wget http://downloads.arachni-scanner.com/arachni-1.1-0.5.7-linux-x86_64.tar.gz && \
+        tar -zxvf arachni-1.1-0.5.7-linux-x86_64.tar.gz && \
+        mv arachni-1.1-0.5.7 /opt/arachni && \
         ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \

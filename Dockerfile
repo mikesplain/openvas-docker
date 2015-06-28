@@ -3,7 +3,7 @@
 #
 # VERSION       1.0.0
 
-FROM phusion/baseimage
+FROM ubuntu
 MAINTAINER Mike Splain mike.splain@gmail.com
 
 RUN apt-get update -y
@@ -29,6 +29,7 @@ RUN apt-get install build-essential \
                     libxslt1.1 \
                     libxslt1-dev \
                     libcurl4-gnutls-dev \
+                    libkrb5-dev \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \
@@ -38,7 +39,8 @@ RUN apt-get install build-essential \
                     texlive-latex-extra \
                     unzip \
                     wapiti \
-                    nmap -y --no-install-recommends && \
+                    nmap \
+                    -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
         wget http://wald.intevation.org/frs/download.php/2031/openvas-libraries-7.0.10.tar.gz && \
@@ -98,9 +100,6 @@ RUN apt-get install build-essential \
         tar -zxvf arachni-1.1-0.5.7-linux-x86_64.tar.gz && \
         mv arachni-1.1-0.5.7 /opt/arachni && \
         ln -s /opt/arachni/bin/* /usr/local/bin/ && \
-    apt-get clean -yq && \
-    apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake && \
     cd ~ && \
     wget https://github.com/sullo/nikto/archive/master.zip && \
     unzip master.zip -d /tmp && \
@@ -108,24 +107,21 @@ RUN apt-get install build-essential \
     rm -rf /tmp/nikto-master && \
     echo "EXECDIR=/opt/nikto\nPLUGINDIR=/opt/nikto/plugins\nDBDIR=/opt/nikto/databases\nTEMPLATEDIR=/opt/nikto/templates\nDOCDIR=/opt/nikto/docs" >> /opt/nikto/nikto.conf && \
     ln -s /opt/nikto/nikto.pl /usr/local/bin/nikto.pl && \
-    ln -s /opt/nikto/nikto.conf /etc/nikto.conf
+    ln -s /opt/nikto/nikto.conf /etc/nikto.conf && \
+    apt-get clean -yq && \
+    apt-get autoremove -yq && \
+    apt-get purge -y --auto-remove build-essential cmake
 
-RUN mkdir /etc/service/gsad && \
-    mkdir /etc/service/openvassd && \
-    mkdir /etc/service/openvasmd
-
-ADD bin/gsad /etc/service/gsad/run
-ADD bin/openvassd /etc/service/openvassd/run
-ADD bin/openvasmd /etc/service/openvasmd/run
+RUN mkdir /openvas
 
 RUN wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
+ADD bin/setup.sh /openvas/setup.sh
+ADD bin/start.sh /openvas/start.sh
 
-RUN mkdir -p /etc/my_init.d
-ADD bin/rebuild_service.sh /etc/my_init.d/rebuild_service.sh
-ADD bin/rebuild.sh /usr/local/bin/rebuid.sh
-ADD bin/setup.sh /etc/my_init.d/000_setup.sh
+RUN chmod 700 /openvas/*.sh && \
+    sh /openvas/setup.sh
 
-RUN chmod 700 /etc/service/gsad/run /etc/service/openvassd/run /etc/service/openvasmd/run /openvas-check-setup /etc/my_init.d/rebuild_service.sh /usr/local/bin/rebuid.sh /etc/my_init.d/000_setup.sh
+CMD /openvas/start.sh
 
 # Expose UI
 EXPOSE 443
@@ -133,3 +129,4 @@ EXPOSE 443
 # Scanner ports
 EXPOSE 9390
 EXPOSE 9391
+EXPOSE 9392

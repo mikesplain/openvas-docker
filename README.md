@@ -19,7 +19,7 @@ Simply run:
 docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas
 ```
 
-This will grab the container from the docker registry and start it up.  Openvas startup can take some time (2-3 minutes whilte NVT's are scanned and databases rebuilt), so be patient.  That being said, the web UI should be available almost immediately.  Goto `https://<machinename>`
+This will grab the container from the docker registry and start it up.  Openvas startup can take some time (4-5 minutes while NVT's are scanned and databases rebuilt), so be patient.  Once you see a `gasd` process in the top command below, the web ui is good to go.  Goto `https://<machinename>`
 
 ```
 Username: admin

@@ -4,13 +4,9 @@ machine:
 
 dependencies:
   override:
-    - curl --fail -L -O https://github.com/phusion/baseimage-docker/archive/master.tar.gz && tar xzf master.tar.gz && sudo ./baseimage-docker-master/install-tools.sh
-    - docker build --no-cache -t mikesplain/openvas_base openvas_base:
+    - docker build --no-cache -t mikesplain/openvas .:
         timeout: 900
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) make testbase ;; 1) make testfull ;; esac:
-        parallel: true
+    - docker build -t mikesplain/openvas .:
         timeout: 1200
-  post:
-    - make cleanup

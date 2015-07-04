@@ -2,10 +2,6 @@ machine:
   services:
     - docker
 
-dependencies:
-  override:
-    - docker build --no-cache -t mikesplain/openvas .:
-        timeout: 900
 test:
   override:
     - docker build -t mikesplain/openvas .:

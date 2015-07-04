@@ -1,13 +1,11 @@
 # OpenVAS
 # Based on: http://hackertarget.com/install-openvas-7-ubuntu/
-#
-# VERSION       1.0.0
 
 FROM ubuntu
 MAINTAINER Mike Splain mike.splain@gmail.com
 
-RUN apt-get update -y
-RUN apt-get install build-essential \
+RUN apt-get update -y && \
+    apt-get install build-essential \
                     bison \
                     flex \
                     cmake \
@@ -110,23 +108,15 @@ RUN apt-get install build-essential \
     ln -s /opt/nikto/nikto.conf /etc/nikto.conf && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake
+    apt-get purge -y --auto-remove build-essential cmake && \
+    mkdir /openvas && \
+    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
 
-RUN mkdir /openvas
-
-RUN wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
-ADD bin/setup.sh /openvas/setup.sh
-ADD bin/start.sh /openvas/start.sh
-
+ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \
     sh /openvas/setup.sh
 
 CMD /openvas/start.sh
 
 # Expose UI
-EXPOSE 443
-
-# Scanner ports
-EXPOSE 9390
-EXPOSE 9391
-EXPOSE 9392
+EXPOSE 443 9390 9391 9392

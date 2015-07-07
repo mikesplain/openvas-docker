@@ -1,10 +1,12 @@
 #!/bin/bash
 
+echo "Starting Redis"
+/usr/local/bin/redis-server /etc/redis/redis.config
+
 echo "Starting Openvas..."
 
 cd /usr/local/sbin
-echo "Starting Openvasmd"
-./openvasmd
+
 echo "Starting gsad"
 ./gsad
 echo "Starting Openvassd"
@@ -19,12 +21,27 @@ do
          fi
          echo "Rebuild failed, attempt: $n"
          n=$[$n+1]
+         echo "Cleaning up:"
+         rm -rf /usr/local/var/lib/openvas/mgr/tasks.db
 done
 
+echo "Starting Openvasmd"
+./openvasmd
+
 echo "Checking setup"
-/openvas/openvas-check-setup --v7
+
+until [ $n -eq 50 ]
+do
+         timeout 10s /openvas/openvas-check-setup --v8 --server;
+        if [ $? -eq 0 ]; then
+                 break;
+         fi
+         echo "Re-running openvas-check-setup, attempt: $n"
+         n=$[$n+1]
+done
 
 echo "Done."
+
 echo "Starting infinite loop..."
 
 echo "Press [CTRL+C] to stop.."

@@ -4,8 +4,8 @@
 FROM ubuntu
 MAINTAINER Mike Splain mike.splain@gmail.com
 
-RUN apt-get update -y && \
-    apt-get install build-essential \
+RUN apt-get update -y
+RUN apt-get install build-essential \
                     bison \
                     flex \
                     cmake \
@@ -30,11 +30,11 @@ RUN apt-get update -y && \
                     libxml2-dev \
                     libxslt1.1 \
                     libxslt1-dev \
-                    libcurl4-gnutls-dev \
-                    libkrb5-dev \
                     libhiredis-dev \
+                    heimdal-dev \
                     libssh-dev \
                     libpopt-dev \
+                    mingw32 \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \
@@ -60,8 +60,8 @@ RUN apt-get update -y && \
         tar zxvf openvas-manager-6.0.3.tar.gz && \
         tar zxvf greenbone-security-assistant-6.0.3.tar.gz && \
         tar zxvf openvas-cli-1.4.1.tar.gz && \
-        tar zxvf openvas-smb-1.0.1.tar.gz && \
-    cd /openvas-src/openvas-libraries-8.0.3 && \
+        tar zxvf openvas-smb-1.0.1.tar.gz
+RUN cd /openvas-src/openvas-libraries-8.0.3 && \
         mkdir source && \
         cd source && \
         cmake .. && \
@@ -91,6 +91,18 @@ RUN apt-get update -y && \
         cmake .. && \
         make && \
         make install && \
+    mkdir /redis && \
+        cd /redis && \
+        wget http://download.redis.io/releases/redis-2.8.19.tar.gz  && \
+            tar zxvf redis-2.8.19.tar.gz && \
+            cd redis-2.8.19 && \
+            make -j $(nproc)&& \
+            make install && \
+            rm -fr /redis && \
+    apt-get remove heimdal-dev -y && \
+    apt-get install curl \
+            libcurl4-gnutls-dev \
+            libkrb5-dev -y && \
     cd /openvas-src/openvas-smb-1.0.1 && \
         mkdir source && \
         cd source && \

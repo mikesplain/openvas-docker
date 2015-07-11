@@ -32,6 +32,8 @@ RUN apt-get update -y && \
                     libxslt1-dev \
                     libcurl4-gnutls-dev \
                     libkrb5-dev \
+                    libhiredis-dev \
+                    libssh-dev \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \

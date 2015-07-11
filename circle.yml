@@ -6,3 +6,5 @@ test:
   override:
     - docker build -t mikesplain/openvas .:
         timeout: 1200
+    - ./test.sh:
+        timeout: 600

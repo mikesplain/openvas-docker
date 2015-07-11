@@ -25,6 +25,10 @@ echo "Checking setup"
 /openvas/openvas-check-setup --v7
 
 echo "Done."
+
+./usr/local/bin/redis-server /etc/redis/redis.config
+
+
 echo "Starting infinite loop..."
 
 echo "Press [CTRL+C] to stop.."

@@ -143,6 +143,7 @@ RUN cd /openvas-src/openvas-libraries-8.0.3 && \
 ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \
     bash /openvas/setup.sh
+ADD config/redis.config /etc/redis/redis.config
 
 CMD bash /openvas/start.sh
 

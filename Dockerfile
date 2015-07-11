@@ -34,6 +34,7 @@ RUN apt-get update -y && \
                     libkrb5-dev \
                     libhiredis-dev \
                     libssh-dev \
+                    libpopt-dev \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \

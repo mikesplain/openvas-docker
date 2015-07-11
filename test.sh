@@ -10,4 +10,5 @@ until docker logs openvas | grep -E 'It seems like your OpenVAS-7 installation i
   echo "=========================================================================";
   sleep 2 ;
 done
+
 docker logs openvas | grep -E 'It seems like your OpenVAS-7 installation is OK'

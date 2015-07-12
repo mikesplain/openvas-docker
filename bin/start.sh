@@ -5,5 +5,5 @@
 cd /usr/local/sbin
 ./openvasmd
 ./gsad
-sleep 10 && /openvas/openvas-check-setup  --v7&
+sleep 30 && /openvas/openvas-check-setup  --v7&
 ./openvassd -f

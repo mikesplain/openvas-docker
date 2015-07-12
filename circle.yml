@@ -4,7 +4,7 @@ machine:
 
 test:
   override:
-    - docker build -t mikesplain/openvas .:
+    - docker build -t openvas_test_build .:
         timeout: 1200
     - sh test.sh:
         timeout: 600

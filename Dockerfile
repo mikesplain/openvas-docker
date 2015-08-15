@@ -109,11 +109,12 @@ RUN apt-get update -y && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake && \
-    mkdir /openvas && \
-    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
+    mkdir /openvas
 
 ADD bin/* /openvas/
-RUN chmod 700 /openvas/*.sh && \
+RUN cd /openvas && \
+    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate && \
+    chmod 700 /openvas/* && \
     sh /openvas/setup.sh
 
 CMD /openvas/start.sh

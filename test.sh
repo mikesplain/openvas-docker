@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name openvas openvas_test_build
+docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name openvas mikesplain/openvas
 
 echo "Waiting for startup to complete..."
 until docker logs openvas | grep -E 'It seems like your OpenVAS-7 installation is'; do

@@ -108,6 +108,7 @@ RUN apt-get update -y && \
     ln -s /opt/nikto/nikto.conf /etc/nikto.conf && \
     mkdir -p /openvas && \
     wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate -O /openvas/openvas-check-setup && \
+    chmod a+x /openvas/openvas-check-setup && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake

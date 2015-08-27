@@ -2,14 +2,14 @@
 
 echo "Starting setup..."
 
-openvas-mkcert -q
+openvas-mkcert -f -q
 ldconfig
 openvassd
 openvas-nvt-sync
 openvas-scapdata-sync
 openvas-certdata-sync
 openvas-mkcert-client -n -i
-openvasmd --rebuild
+openvasmd --rebuild --progress -v
 openvasmd --create-user=admin --role=Admin
 openvasmd --user=admin --new-password=openvas
 

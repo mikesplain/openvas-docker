@@ -106,11 +106,11 @@ RUN apt-get update -y && \
     echo "EXECDIR=/opt/nikto\nPLUGINDIR=/opt/nikto/plugins\nDBDIR=/opt/nikto/databases\nTEMPLATEDIR=/opt/nikto/templates\nDOCDIR=/opt/nikto/docs" >> /opt/nikto/nikto.conf && \
     ln -s /opt/nikto/nikto.pl /usr/local/bin/nikto.pl && \
     ln -s /opt/nikto/nikto.conf /etc/nikto.conf && \
+    mkdir -p /openvas && \
+    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate -O /openvas/openvas-check-setup && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake && \
-    mkdir /openvas && \
-    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
+    apt-get purge -y --auto-remove build-essential cmake
 
 ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \

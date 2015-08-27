@@ -1,8 +1,15 @@
 #!/bin/bash
 
-/openvas/setup.sh
 
 cd /usr/local/sbin
 ./openvasmd
 ./gsad
-./openvassd -f
+./openvassd
+openvasmd --rebuild --progress -v
+/openvas/openvas-check-setup --v7
+
+while true
+do
+	echo "Press [CTRL+C] to stop.."
+	sleep 1
+done

@@ -10,7 +10,7 @@ echo "Starting gsad"
 echo "Starting Openvassd"
 ./openvassd
 echo "Rebuilding openvasmd"
-openvasmd --rebuild --progress -v
+openvasmd --rebuild -v
 echo "Checking setup"
 /openvas/openvas-check-setup --v7
 

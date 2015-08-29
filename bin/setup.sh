@@ -10,7 +10,16 @@ openvas-scapdata-sync
 openvas-certdata-sync
 openvas-mkcert-client -n -i
 echo "Rebuilding Openvasmd..."
-openvasmd --rebuild -v
+n=1
+until [ $n -eq 4 ]
+do
+         timeout 5m openvasmd --rebuild -v;
+        if [ $? -eq 0 ]; then
+                 break;
+         fi
+         echo "Rebuild failed, attempt: $n"
+         n=$[$n+1]
+done
 echo "Creating Admin user..."
 openvasmd --create-user=admin --role=Admin
 echo "Setting Admin user password..."

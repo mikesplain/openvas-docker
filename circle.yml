@@ -5,8 +5,10 @@ machine:
 test:
   override:
     - mkdir logs
-    - docker build -t openvas . 2>&1 | tee logs/build.log:
+    - docker build -t openvas . &> logs/build.log:
         timeout: 1200
+    - sh test.sh &> logs/test.log:
+        timeout: 600
 
 general:
   artifacts:

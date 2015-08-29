@@ -115,9 +115,9 @@ RUN apt-get update -y && \
 
 ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \
-    sh /openvas/setup.sh
+    bash /openvas/setup.sh
 
-CMD /openvas/start.sh
+CMD bash /openvas/start.sh
 
 # Expose UI
 EXPOSE 443 9390 9391 9392

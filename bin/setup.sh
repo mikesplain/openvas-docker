@@ -13,7 +13,7 @@ echo "Rebuilding Openvasmd..."
 n=1
 until [ $n -eq 4 ]
 do
-         timeout 5m openvasmd --rebuild -v;
+         timeout 10m openvasmd --rebuild -v;
         if [ $? -eq 0 ]; then
                  break;
          fi

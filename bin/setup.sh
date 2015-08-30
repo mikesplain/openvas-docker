@@ -9,6 +9,8 @@ openvas-nvt-sync
 openvas-scapdata-sync
 openvas-certdata-sync
 openvas-mkcert-client -n -i
+echo "Starting openvasmd"
+openvasmd
 echo "Rebuilding Openvasmd..."
 n=1
 until [ $n -eq 4 ]

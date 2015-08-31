@@ -21,6 +21,10 @@ do
          fi
          echo "Rebuild failed, attempt: $n"
          n=$[$n+1]
+         echo "Cleaning up"
+         ps aux | grep openvassd| awk '{print $2}' |xargs kill -9
+         ps aux | grep openvasmd| awk '{print $2}' |xargs kill -9
+         openvassd
 done
 echo "Creating Admin user..."
 openvasmd --create-user=admin --role=Admin

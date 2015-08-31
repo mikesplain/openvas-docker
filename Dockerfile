@@ -94,9 +94,9 @@ RUN apt-get update -y && \
         make install && \
     cd / && \
     cd /tmp && \
-    wget http://downloads.arachni-scanner.com/arachni-1.1-0.5.7-linux-x86_64.tar.gz && \
-        tar -zxvf arachni-1.1-0.5.7-linux-x86_64.tar.gz && \
-        mv arachni-1.1-0.5.7 /opt/arachni && \
+    wget https://github.com/Arachni/arachni/releases/download/v1.2.1/arachni-1.2.1-0.5.7.1-linux-x86_64.tar.gz && \
+        tar -zxvf arachni-1.2.1-0.5.7.1-linux-x86_64.tar.gz && \
+        mv arachni-1.2.1-0.5.7.1 /opt/arachni && \
         ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     cd ~ && \
     wget https://github.com/sullo/nikto/archive/master.zip && \
@@ -106,11 +106,12 @@ RUN apt-get update -y && \
     echo "EXECDIR=/opt/nikto\nPLUGINDIR=/opt/nikto/plugins\nDBDIR=/opt/nikto/databases\nTEMPLATEDIR=/opt/nikto/templates\nDOCDIR=/opt/nikto/docs" >> /opt/nikto/nikto.conf && \
     ln -s /opt/nikto/nikto.pl /usr/local/bin/nikto.pl && \
     ln -s /opt/nikto/nikto.conf /etc/nikto.conf && \
+    mkdir -p /openvas && \
+    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate -O /openvas/openvas-check-setup && \
+    chmod a+x /openvas/openvas-check-setup && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake && \
-    mkdir /openvas && \
-    wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate
+    apt-get purge -y --auto-remove build-essential cmake
 
 ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \

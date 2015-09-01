@@ -15,6 +15,7 @@ RUN apt-get update -y && \
                     libpcap0.8-dev \
                     libgpgme11 \
                     libgpgme11-dev \
+                    openssh-client \
                     doxygen \
                     libuuid1 \
                     uuid-dev \

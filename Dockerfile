@@ -11,6 +11,7 @@ RUN apt-get update -y && \
                     cmake \
                     rpm \
                     alien \
+                    nsis \
                     pkg-config \
                     libglib2.0-dev \
                     libgnutls-dev \

@@ -9,6 +9,7 @@ RUN apt-get update -y && \
                     bison \
                     flex \
                     cmake \
+                    rpm \
                     pkg-config \
                     libglib2.0-dev \
                     libgnutls-dev \

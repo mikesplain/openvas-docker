@@ -9,12 +9,14 @@ RUN apt-get update -y && \
                     bison \
                     flex \
                     cmake \
+                    rpm \
                     pkg-config \
                     libglib2.0-dev \
                     libgnutls-dev \
                     libpcap0.8-dev \
                     libgpgme11 \
                     libgpgme11-dev \
+                    openssh-client \
                     doxygen \
                     libuuid1 \
                     uuid-dev \

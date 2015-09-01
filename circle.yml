@@ -10,6 +10,7 @@ test:
     - docker save openvas | gzip -c  > images/openvas.tar.gz
     - sh test.sh 2>&1 | tee logs/test.log:
         timeout: 600
+    - docker logs openvas 2>&1 | tee logs/container.log
 
 general:
   artifacts:

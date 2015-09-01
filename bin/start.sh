@@ -10,7 +10,17 @@ echo "Starting gsad"
 echo "Starting Openvassd"
 ./openvassd
 echo "Rebuilding openvasmd"
-openvasmd --rebuild --progress -v
+n=1
+until [ $n -eq 4 ]
+do
+         timeout 10m openvasmd --rebuild -v;
+        if [ $? -eq 0 ]; then
+                 break;
+         fi
+         echo "Rebuild failed, attempt: $n"
+         n=$[$n+1]
+done
+
 echo "Checking setup"
 /openvas/openvas-check-setup --v7
 

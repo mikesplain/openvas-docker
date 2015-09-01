@@ -10,6 +10,7 @@ RUN apt-get update -y && \
                     flex \
                     cmake \
                     rpm \
+                    alien \
                     pkg-config \
                     libglib2.0-dev \
                     libgnutls-dev \

@@ -6,7 +6,8 @@ cd /usr/local/sbin
 echo "Starting Openvasmd"
 ./openvasmd
 echo "Starting gsad"
-./gsad
+# http://wiki.openvas.org/index.php/Edit_the_SSL_ciphers_used_by_GSAD
+./gsad --gnutls-priorities="SECURE128:-AES-128-CBC:-CAMELLIA-128-CBC:-VERS-SSL3.0:-VERS-TLS1.0"
 echo "Starting Openvassd"
 ./openvassd
 echo "Rebuilding openvasmd"

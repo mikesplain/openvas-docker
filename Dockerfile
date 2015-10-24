@@ -95,7 +95,7 @@ RUN apt-get install build-essential \
         cmake .. && \
         make && \
         make install && \
-    mkdir /redis && \
+    mkdir /redis /osp && \
     cd /osp &&\
         wget http://wald.intevation.org/frs/download.php/2177/ospd-1.0.2.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2005/ospd-ancor-1.0.0.tar.gz && \

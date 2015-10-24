@@ -52,50 +52,50 @@ RUN apt-get install build-essential \
                     -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
-        wget http://wald.intevation.org/frs/download.php/2125/openvas-libraries-8.0.4.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2129/openvas-scanner-5.0.4.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2169/openvas-manager-6.0.5.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2173/greenbone-security-assistant-6.0.5.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2141/openvas-cli-1.4.2.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/1975/openvas-smb-1.0.1.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2191/openvas-libraries-8.0.5.tar.gz -O openvas-libraries.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2129/openvas-scanner-5.0.4.tar.gz -O openvas-scanner.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2195/openvas-manager-6.0.6.tar.gz -O openvas-manager.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2200/greenbone-security-assistant-6.0.6.tar.gz -O greenbone-security-assistant.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2209/openvas-cli-1.4.3.tar.gz -O openvas-cli.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/1975/openvas-smb-1.0.1.tar.gz -O openvas-smb.tar.gz && \
     cd /openvas-src/ && \
-        tar zxvf openvas-libraries-8.0.4.tar.gz && \
-        tar zxvf openvas-scanner-5.0.4.tar.gz && \
-        tar zxvf openvas-manager-6.0.5.tar.gz && \
-        tar zxvf greenbone-security-assistant-6.0.5.tar.gz && \
-        tar zxvf openvas-cli-1.4.2.tar.gz && \
-        tar zxvf openvas-smb-1.0.1.tar.gz
-RUN cd /openvas-src/openvas-libraries-8.0.4 && \
+        tar zxvf openvas-libraries.tar.gz && \
+        tar zxvf openvas-scanner.tar.gz && \
+        tar zxvf openvas-manager.tar.gz && \
+        tar zxvf greenbone-security-assistant.tar.gz && \
+        tar zxvf openvas-cli.tar.gz && \
+        tar zxvf openvas-smb.tar.gz && \
+    cd /openvas-src/openvas-libraries-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/openvas-scanner-5.0.4 && \
+    cd /openvas-src/openvas-scanner-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/openvas-manager-6.0.5 && \
+    cd /openvas-src/openvas-manager-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/greenbone-security-assistant-6.0.5 && \
+    cd /openvas-src/greenbone-security-assistant-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    cd /openvas-src/openvas-cli-1.4.2 && \
+    cd /openvas-src/openvas-cli-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
         make && \
         make install && \
-    mkdir /osp && \
+    mkdir /redis && \
     cd /osp &&\
         wget http://wald.intevation.org/frs/download.php/2177/ospd-1.0.2.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2005/ospd-ancor-1.0.0.tar.gz && \
@@ -139,7 +139,7 @@ RUN cd /openvas-src/openvas-libraries-8.0.4 && \
     apt-get install curl \
             libcurl4-gnutls-dev \
             libkrb5-dev -y && \
-    cd /openvas-src/openvas-smb-1.0.1 && \
+    cd /openvas-src/openvas-smb-* && \
         mkdir source && \
         cd source && \
         cmake .. && \
@@ -174,7 +174,8 @@ RUN cd /openvas-src/openvas-libraries-8.0.4 && \
     chmod a+x /openvas/openvas-check-setup && \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
-    apt-get purge -y --auto-remove build-essential cmake
+    apt-get purge -y --auto-remove build-essential cmake && \
+    rm -rf /var/lib/apt/lists/*
 
 ADD bin/* /openvas/
 RUN chmod 700 /openvas/*.sh && \

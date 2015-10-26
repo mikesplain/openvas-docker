@@ -95,7 +95,7 @@ RUN apt-get install build-essential \
         cmake .. && \
         make && \
         make install && \
-    mkdir /redis /osp && \
+    mkdir /osp && \
     cd /osp &&\
         wget http://wald.intevation.org/frs/download.php/1999/ospd-1.0.0.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2145/ospd-1.0.1.tar.gz && \

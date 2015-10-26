@@ -98,6 +98,7 @@ RUN apt-get install build-essential \
     mkdir /redis /osp && \
     cd /osp &&\
         wget http://wald.intevation.org/frs/download.php/1999/ospd-1.0.0.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2145/ospd-1.0.1.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2177/ospd-1.0.2.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2005/ospd-ancor-1.0.0.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2097/ospd-debsecan-1.0.0.tar.gz && \
@@ -106,6 +107,7 @@ RUN apt-get install build-essential \
         wget http://wald.intevation.org/frs/download.php/2004/ospd-w3af-1.0.0.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2181/ospd-acunetix-1.0b1.tar.gz && \
         tar zxvf ospd-1.0.0.tar.gz && \
+        tar zxvf ospd-1.0.1.tar.gz && \
         tar zxvf ospd-1.0.2.tar.gz && \
         tar zxvf ospd-ancor-1.0.0.tar.gz && \
         tar zxvf ospd-debsecan-1.0.0.tar.gz && \
@@ -121,6 +123,8 @@ RUN apt-get install build-essential \
     cd /osp/ospd-debsecan-1.0.0 && \
         python setup.py install && \
     cd /osp/ospd-ovaldi-1.0.0 && \
+        python setup.py install && \
+    cd /osp/ospd-1.0.1 && \
         python setup.py install && \
     cd /osp/ospd-paloalto-1.0b1 && \
         python setup.py install && \

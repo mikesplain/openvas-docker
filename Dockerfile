@@ -1,7 +1,7 @@
 # OpenVAS
 # Based on: http://hackertarget.com/install-openvas-7-ubuntu/
 
-FROM ubuntu
+FROM ubuntu:14.04
 MAINTAINER Mike Splain mike.splain@gmail.com
 
 RUN apt-get update -y

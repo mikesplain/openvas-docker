@@ -137,9 +137,9 @@ RUN apt-get install build-essential \
         python setup.py install && \
   mkdir /redis && \
         cd /redis && \
-        wget http://download.redis.io/releases/redis-2.8.19.tar.gz  && \
-            tar zxvf redis-2.8.19.tar.gz && \
-            cd redis-2.8.19 && \
+        wget http://download.redis.io/releases/redis-3.0.5.tar.gz  && \
+            tar zxvf redis-3.0.5.tar.gz && \
+            cd redis-3.0.5 && \
             make -j $(nproc)&& \
             make install && \
             rm -fr /redis && \

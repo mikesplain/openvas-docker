@@ -8,3 +8,6 @@ before_install:
 
 script:
   - sh test.sh
+
+notifications:
+  slack: $SLACK_INFO

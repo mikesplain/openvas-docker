@@ -39,22 +39,8 @@ To run bash inside the container run:
 ```
 docker exec -it openvas bash
 ```
-
-Out Of Date NVTs / Certs
-------------------------
-
-If at any point you believe NVTs and/or Certs need to be updated, please put in a [pull request](https://github.com/mikesplain/openvas-docker/pulls) with a simple change like this:
-
-```
-# Fork Repo and git clone
-
-git checkout -b update_nvts_and_certs
-echo `date` > build
-git commit -am "Please update NVTs and Certs"
-git push
-
 # Open PR
-```
+
 
 Contributing
 ------------

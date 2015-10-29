@@ -16,7 +16,7 @@ Usage
 Simply run:
 
 ```
-docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 mikesplain/openvas
+docker run -d -p 443:443 -p 9390:9390 -p 9391:9391 --name openvas mikesplain/openvas
 ```
 
 This will grab the container from the docker registry and start it up.  Openvas startup can take some time (4-5 minutes while NVT's are scanned and databases rebuilt), so be patient.  Once you see a `gasd` process in the top command below, the web ui is good to go.  Goto `https://<machinename>`
@@ -29,7 +29,7 @@ Password: openvas
 To check the status of the process, run:
 
 ```
-docker top mikesplain/openvas
+docker top openvas
 ```
 
 In the output, look for the process scanning cert data.  It contains a percentage.
@@ -37,7 +37,7 @@ In the output, look for the process scanning cert data.  It contains a percentag
 To run bash inside the container run:
 
 ```
-docker exec -it <container id> bash
+docker exec -it openvas bash
 ```
 
 Out Of Date NVTs / Certs

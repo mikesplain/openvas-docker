@@ -1,7 +1,7 @@
 OpenVAS image for Docker
 ==============
 
-[![Circle CI](https://img.shields.io/circleci/project/mikesplain/openvas-docker.svg)](https://hub.docker.com/r/mikesplain/openvas/)
+[![Circle CI](https://img.shields.io/circleci/project/mikesplain/openvas-docker.svg)](https://circleci.com/gh/mikesplain/openvas-docker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mikesplain/openvas.svg)](https://hub.docker.com/r/mikesplain/openvas/)
 [![Docker Stars](https://img.shields.io/docker/stars/mikesplain/openvas.svg)](https://hub.docker.com/r/mikesplain/openvas/)
 

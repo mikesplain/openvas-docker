@@ -4,8 +4,11 @@
 FROM ubuntu:14.04
 MAINTAINER Mike Splain mike.splain@gmail.com
 
-RUN apt-get update -y
-RUN apt-get install build-essential \
+ADD bin/* /openvas/
+ADD config/redis.config /etc/redis/redis.config
+
+RUN apt-get update && \
+    apt-get install build-essential \
                     bison \
                     flex \
                     cmake \
@@ -135,7 +138,7 @@ RUN apt-get install build-essential \
         python setup.py install && \
     cd /osp/ospd-1.0.2 && \
         python setup.py install && \
-  mkdir /redis && \
+    mkdir /redis && \
         cd /redis && \
         wget http://download.redis.io/releases/redis-3.0.5.tar.gz  && \
             tar zxvf redis-3.0.5.tar.gz && \
@@ -183,14 +186,10 @@ RUN apt-get install build-essential \
     apt-get clean -yq && \
     apt-get autoremove -yq && \
     apt-get purge -y --auto-remove build-essential cmake && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    /openvas/setup.sh
 
-ADD bin/* /openvas/
-RUN chmod 700 /openvas/*.sh && \
-    bash /openvas/setup.sh
-ADD config/redis.config /etc/redis/redis.config
-
-CMD bash /openvas/start.sh
+CMD /openvas/start.sh
 
 # Expose UI
 EXPOSE 443 9390 9391 9392

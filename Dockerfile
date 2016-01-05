@@ -4,6 +4,9 @@
 FROM ubuntu:14.04
 MAINTAINER Mike Splain mike.splain@gmail.com
 
+ENV OPENVAS_ADMIN_USER     admin
+ENV OPENVAS_ADMIN_PASSWORD openvas
+
 ADD bin/* /openvas/
 ADD config/redis.config /etc/redis/redis.config
 

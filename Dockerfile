@@ -1,7 +1,7 @@
 # OpenVAS
 # Based on: http://hackertarget.com/install-openvas-7-ubuntu/
 
-FROM ubuntu:14.04
+FROM ubuntu:15.04
 MAINTAINER Mike Splain mike.splain@gmail.com
 
 ENV OPENVAS_ADMIN_USER     admin
@@ -18,11 +18,13 @@ RUN apt-get update && \
                     rpm \
                     alien \
                     nsis \
+                    net-tools \
                     pkg-config \
                     libglib2.0-dev \
                     libgnutls-dev \
                     libpcap0.8-dev \
                     libgpgme11 \
+                    libgcrypt11-dev \
                     libgpgme11-dev \
                     openssh-client \
                     doxygen \
@@ -40,7 +42,7 @@ RUN apt-get update && \
                     heimdal-dev \
                     libssh-dev \
                     libpopt-dev \
-                    mingw32 \
+                    mingw-w64 \
                     xsltproc \
                     libmicrohttpd-dev \
                     wget \
@@ -58,10 +60,10 @@ RUN apt-get update && \
                     -y --no-install-recommends && \
     mkdir /openvas-src && \
     cd /openvas-src && \
-        wget http://wald.intevation.org/frs/download.php/2191/openvas-libraries-8.0.5.tar.gz -O openvas-libraries.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2129/openvas-scanner-5.0.4.tar.gz -O openvas-scanner.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2195/openvas-manager-6.0.6.tar.gz -O openvas-manager.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2200/greenbone-security-assistant-6.0.6.tar.gz -O greenbone-security-assistant.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2262/openvas-libraries-8.0.6.tar.gz -O openvas-libraries.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2266/openvas-scanner-5.0.5.tar.gz -O openvas-scanner.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2270/openvas-manager-6.0.7.tar.gz -O openvas-manager.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2283/greenbone-security-assistant-6.0.8.tar.gz -O greenbone-security-assistant.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2209/openvas-cli-1.4.3.tar.gz -O openvas-cli.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1975/openvas-smb-1.0.1.tar.gz -O openvas-smb.tar.gz && \
     cd /openvas-src/ && \

@@ -1,7 +1,7 @@
 # OpenVAS
 # Based on: http://hackertarget.com/install-openvas-7-ubuntu/
 
-FROM ubuntu:14.04
+FROM ubuntu:15.04
 MAINTAINER Mike Splain mike.splain@gmail.com
 
 ENV OPENVAS_ADMIN_USER     admin

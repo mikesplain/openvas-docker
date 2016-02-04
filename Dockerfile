@@ -63,7 +63,7 @@ RUN apt-get update && \
         wget http://wald.intevation.org/frs/download.php/2262/openvas-libraries-8.0.6.tar.gz -O openvas-libraries.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2266/openvas-scanner-5.0.5.tar.gz -O openvas-scanner.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2270/openvas-manager-6.0.7.tar.gz -O openvas-manager.tar.gz && \
-        wget http://wald.intevation.org/frs/download.php/2283/greenbone-security-assistant-6.0.8.tar.gz -O greenbone-security-assistant.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2287/greenbone-security-assistant-6.0.9.tar.gz -O greenbone-security-assistant.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2209/openvas-cli-1.4.3.tar.gz -O openvas-cli.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/1975/openvas-smb-1.0.1.tar.gz -O openvas-smb.tar.gz && \
     cd /openvas-src/ && \

@@ -4,6 +4,7 @@ OpenVAS image for Docker
 [![Circle CI](https://img.shields.io/circleci/project/mikesplain/openvas-docker.svg)](https://circleci.com/gh/mikesplain/openvas-docker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mikesplain/openvas.svg)](https://hub.docker.com/r/mikesplain/openvas/)
 [![Docker Stars](https://img.shields.io/docker/stars/mikesplain/openvas.svg)](https://hub.docker.com/r/mikesplain/openvas/)
+[![](https://badge.imagelayers.io/mikesplain/openvas:latest.svg)](https://imagelayers.io/?images=mikesplain/openvas:latest 'Get your own badge on imagelayers.io')
 
 A Docker container for OpenVAS 8 on the Ubuntu 14.04 image.  By default, the latest images includes the OpenVAS Base as well as the NVTs and Certs required to run OpenVAS.
 

@@ -43,15 +43,6 @@ done
 
 echo "Done."
 
-echo 'Delete unknown users...'
-openvasmd --get-users | fgrep -v "${OPENVAS_ADMIN_USER}" | xargs -n1 -IUSER -r openvasmd --delete-user=USER
-if [[ -z "$(openvasmd --get-users | fgrep "${OPENVAS_ADMIN_USER}")" ]]; then
-    echo 'Create admin  user...'
-    openvasmd --create-user="${OPENVAS_ADMIN_USER}" --role=Admin
-fi
-echo 'Set admin password...'
-openvasmd --user="${OPENVAS_ADMIN_USER}" --new-password="${OPENVAS_ADMIN_PASSWORD}"
-
 echo "Starting infinite loop..."
 
 echo "Press [CTRL+C] to stop.."

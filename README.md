@@ -7,6 +7,11 @@ OpenVAS image for Docker
 
 A Docker container for OpenVAS 8 on the Ubuntu 14.04 image.  By default, the latest images includes the OpenVAS Base as well as the NVTs and Certs required to run OpenVAS.
 
+News
+----
+There has been a bit of stability issues lately so I have reverted change to allow changing of Admin username and password prior to build. This should add some stability back.
+I’ll look into other ways to implement this shortly.
+
 Requirements
 ------------
 Docker

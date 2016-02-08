@@ -27,9 +27,9 @@ do
          openvassd
 done
 echo "Creating Admin user..."
-openvasmd --create-user=${OPENVAS_ADMIN_USER} --role=Admin
+openvasmd --create-user=admin --role=Admin
 echo "Setting Admin user password..."
-openvasmd --user=${OPENVAS_ADMIN_USER} --new-password=${OPENVAS_ADMIN_PASSWORD}
+openvasmd --user=admin --new-password=openvas
 echo "Killing some locked up openvassd's"
 # At this point, usually openvassd locks up so lets kill it
 ps aux | grep openvassd| awk '{print $2}' |xargs kill -9

@@ -9,6 +9,8 @@ OpenVAS image for Docker
 
 A Docker container for OpenVAS 8 on the Ubuntu 14.04 image.  By default, the latest images includes the OpenVAS Base as well as the NVTs and Certs required to run OpenVAS.
 
+Update Feb 22nd 2016: We now build using packages rather than compilition in container.  If you see any issues, please submit an issue!
+
 Requirements
 ------------
 Docker
@@ -43,8 +45,16 @@ To run bash inside the container run:
 ```
 docker exec -it openvas bash
 ```
-# Open PR
 
+Config
+------
+By default GSAD will run on 443 with self signed certs.  If you would like to run
+this on 80 without certs you can pass the following param and change the port in
+docker run from 443 to 80
+
+```
+docker run -d -p 80:80 -p 9390:9390 -p 9391:9391 -e HTTP_ONLY=true  --name openvas mikesplain/openvas
+```
 
 Contributing
 ------------

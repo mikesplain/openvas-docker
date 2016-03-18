@@ -10,8 +10,10 @@ RUN apt-get update && \
     apt-get install software-properties-common -yq && \
     add-apt-repository ppa:mikesplain/openvas -y && \
     apt-get update && \
+    apt-get upgrade -y && \
     apt-get install alien \
                     dirb \
+                    dnsutils \
                     nikto \
                     nmap \
                     nsis \

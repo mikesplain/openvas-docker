@@ -13,6 +13,7 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install alien \
                     dirb \
+                    dnsutils \
                     nikto \
                     nmap \
                     nsis \

@@ -25,6 +25,12 @@ echo "Starting rebuild process..."
 echo "This may take a minute or two..."
 openvasmd --rebuild
 
+# Default Password: openvas
+if [ ! -z "$OV_ADMIN_PASSWORD" ]; then
+  echo "Change Admin Password"
+  openvasmd --user=admin --new-password=$OV_ADMIN_PASSWORD
+fi
+
 echo "Checking setup"
 
 /openvas/openvas-check-setup --v8 --server;

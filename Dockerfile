@@ -11,7 +11,6 @@ RUN apt-get update && \
     add-apt-repository ppa:mikesplain/openvas -y && \
     add-apt-repository ppa:mrazavi/openvas -y && \
     apt-get update && \
-    apt-get upgrade -y && \
     apt-get install alien \
                     dirb \
                     dnsutils \

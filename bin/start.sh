@@ -11,23 +11,41 @@ echo "Starting Redis"
 mkdir -p /var/run/redis
 redis-server /etc/redis/redis.config
 
-echo "Starting Openvas..."
-
 cd /usr/local/sbin
 
 echo "Starting gsad"
 # http://wiki.openvas.org/index.php/Edit_the_SSL_ciphers_used_by_GSAD
-gsad --gnutls-priorities="SECURE128:-AES-128-CBC:-CAMELLIA-128-CBC:-VERS-SSL3.0:-VERS-TLS1.0" $set_http_only
+gsad --gnutls-priorities="SECURE256:-VERS-TLS-ALL:+VERS-TLS1.2" $set_http_only
 
-/etc/init.d/openvas-scanner start
-/etc/init.d/openvas-manager start
+echo "Updating NVTs, CVEs, CPEs..."
+openvas-nvt-sync
+openvas-scapdata-sync
+openvas-certdata-sync
+
+echo "Starting Openvas..."
+service openvas-manager restart
+service openvas-scanner restart
+
 echo "Starting rebuild process..."
 echo "This may take a minute or two..."
 openvasmd --rebuild
 
-echo "Checking setup"
+# Check whether an admin user already exists
+if ! openvasmd --get-users | grep -q admin; then
 
-/openvas/openvas-check-setup --v8 --server;
+    # Add the user
+    echo "Adding new admin user..."
+    openvasmd --create-user=admin --role=Admin
+    echo "Setting Admin user password..."
+    openvasmd --user=admin --new-password=openvas
+
+	# Since this is a first time run we need to rebuild again to fix OIDs displaying instead of titles
+	openvasmd --rebuild
+
+fi
+
+echo "Checking setup"
+/openvas/openvas-check-setup --v8 --server
 echo "Done."
 
 echo "Starting infinite loop..."

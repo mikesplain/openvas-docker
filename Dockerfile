@@ -9,6 +9,7 @@ ADD config/redis.config /etc/redis/redis.config
 RUN apt-get update && \
     apt-get install software-properties-common -yq && \
     add-apt-repository ppa:mikesplain/openvas -y && \
+    add-apt-repository ppa:mrazavi/openvas -y && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install alien \
@@ -27,6 +28,7 @@ RUN apt-get update && \
                     python-setuptools \
                     rpm \
                     rsync \
+                    smbclient \
                     sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \
@@ -45,6 +47,10 @@ RUN apt-get update && \
         wget http://wald.intevation.org/frs/download.php/2149/ospd-paloalto-1.0b1.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2004/ospd-w3af-1.0.0.tar.gz && \
         wget http://wald.intevation.org/frs/download.php/2181/ospd-acunetix-1.0b1.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2185/ospd-ikescan-1.0b1.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2204/ospd-ikeprobe-1.0b1.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2213/ospd-ssh-keyscan-1.0b1.tar.gz && \
+        wget http://wald.intevation.org/frs/download.php/2219/ospd-netstat-1.0b1.tar.gz && \
         tar zxvf ospd-1.0.0.tar.gz && \
         tar zxvf ospd-1.0.1.tar.gz && \
         tar zxvf ospd-1.0.2.tar.gz && \
@@ -54,7 +60,15 @@ RUN apt-get update && \
         tar zxvf ospd-paloalto-1.0b1.tar.gz && \
         tar zxvf ospd-w3af-1.0.0.tar.gz && \
         tar zxvf ospd-acunetix-1.0b1.tar.gz && \
+        tar zxvf ospd-ikescan-1.0b1.tar.gz && \
+        tar zxvf ospd-ikeprobe-1.0b1.tar.gz && \
+        tar zxvf ospd-ssh-keyscan-1.0b1.tar.gz && \
+        tar zxvf ospd-netstat-1.0b1.tar.gz && \
     cd /osp/ospd-1.0.0 && \
+        python setup.py install && \
+    cd /osp/ospd-1.0.1 && \
+        python setup.py install && \
+    cd /osp/ospd-1.0.2 && \
         python setup.py install && \
     cd /osp/ospd-ancor-1.0.0 && \
         pip install requests && \
@@ -72,15 +86,23 @@ RUN apt-get update && \
         python setup.py install && \
     cd /osp/ospd-acunetix-1.0b1 && \
         python setup.py install && \
+    cd /osp/ospd-ikescan-1.0b1  && \
+        python setup.py install && \
+    cd /osp/ospd-ikeprobe-1.0b1 && \
+        python setup.py install && \
+    cd /osp/ospd-ssh-keyscan-1.0b1 && \
+        python setup.py install && \
+    cd /osp/ospd-netstat-1.0b1 && \
     cd /osp/ospd-1.0.2 && \
         python setup.py install && \
     cd /tmp && \
-    wget https://github.com/Arachni/arachni/releases/download/v1.2.1/arachni-1.2.1-0.5.7.1-linux-x86_64.tar.gz && \
-        tar -zxvf arachni-1.2.1-0.5.7.1-linux-x86_64.tar.gz && \
-        mv arachni-1.2.1-0.5.7.1 /opt/arachni && \
+    wget https://github.com/Arachni/arachni/releases/download/v1.4/arachni-1.4-0.5.10-linux-x86_64.tar.gz && \
+        tar -zxvf arachni-1.4-0.5.10-linux-x86_64.tar.gz && \
+        mv arachni-1.4-0.5.10 /opt/arachni && \
         ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     rm -rf /tmp/arachni* && \
     mkdir -p /openvas && \
+    mkdir -p /var/lib/openvas/scap-data/private && \
     wget https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup --no-check-certificate -O /openvas/openvas-check-setup && \
     chmod a+x /openvas/openvas-check-setup && \
     apt-get clean -yq && \
@@ -91,4 +113,4 @@ RUN apt-get update && \
 CMD /openvas/start.sh
 
 # Expose UI
-EXPOSE 80 443 9390 9391 9392
+EXPOSE 80 443 9390 9391

@@ -8,7 +8,7 @@ ADD config/redis.config /etc/redis/redis.config
 
 RUN apt-get update && \
     apt-get install software-properties-common -yq && \
-    add-apt-repository ppa:mikesplain/openvas -y && \
+    add-apt-repository ppa:mrazavi/openvas -y && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install alien \

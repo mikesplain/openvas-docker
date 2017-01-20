@@ -42,3 +42,5 @@ EXPOSE 4000 9390 9391
 RUN greenbone-nvt-sync --verbose
 RUN greenbone-scapdata-sync --verbose
 RUN greenbone-certdata-sync --verbose
+
+CMD /start

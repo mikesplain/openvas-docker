@@ -4,15 +4,13 @@ machine:
 
 test:
   override:
-    - mkdir logs images
-    - docker build -t openvas . 2>&1 | tee logs/build.log:
-        timeout: 1200
-    - docker save openvas | gzip -c  > images/openvas.tar.gz
-    - ./test.sh 2>&1 | tee logs/test.log:
-        timeout: 600
-    - docker logs openvas 2>&1 | tee logs/container.log
+    - case $CIRCLE_NODE_INDEX in 0) 8/ci.sh ;; 1) 9/ci.sh ;; esac:
+        parallel: true
+        timeout: 1800
 
 general:
   artifacts:
-    - "logs"
-    - "images"
+    - "8/logs"
+    - "8/images"
+    - "9/logs"
+    - "9/images"

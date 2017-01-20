@@ -1,0 +1,11 @@
+#!/bin/bash
+
+redis-server /etc/redis/redis.conf
+
+service openvas-scanner restart
+service openvas-manager restart
+service openvas-gsa restart
+openvasmd --rebuild --progress
+./openvas-check-setup --v9
+
+tail -F /var/log/openvas/*

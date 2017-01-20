@@ -26,7 +26,7 @@ This will grab the container from the docker registry and start it up.  Openvas 
 
 ```
 Username: admin
-Password: openvas
+Password: admin
 ```
 
 To check the status of the process, run:

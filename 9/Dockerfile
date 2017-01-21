@@ -35,12 +35,10 @@ RUN mkdir -p /var/run/redis && \
     wget -q --no-check-certificate \
       https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup \
       -O /openvas-check-setup && \
-    chmod +x /openvas-check-setup
-
-EXPOSE 4000 9390 9391
-
-RUN greenbone-nvt-sync --verbose
-RUN greenbone-scapdata-sync --verbose
-RUN greenbone-certdata-sync --verbose
+    chmod +x /openvas-check-setup && \
+    greenbone-nvt-sync && \
+    greenbone-scapdata-sync && \
+    greenbone-certdata-sync
 
 CMD /start
+EXPOSE 4000

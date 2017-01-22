@@ -29,6 +29,13 @@ RUN apt-get install openvas9 \
                     texlive-latex-extra \
                     texlive-latex-recommended \
                     -yq && \
+    apt-get purge \
+        texlive-pstricks-doc \
+        texlive-pictures-doc \
+        texlive-latex-extra-doc \
+        texlive-latex-base-doc \
+        texlive-latex-recommended-doc \
+        -yq && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/redis && \

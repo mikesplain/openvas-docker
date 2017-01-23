@@ -47,12 +47,7 @@ RUN mkdir -p /var/run/redis && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
     greenbone-certdata-sync && \
-    redis-server /etc/redis/redis.conf && \
-    service openvas-scanner restart && \
-    service openvas-manager restart && \
-    service openvas-gsa restart && \
-    openvasmd --rebuild --progress && \
-    ./openvas-check-setup --v9 && \
+    BUILD=true /start && \
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \

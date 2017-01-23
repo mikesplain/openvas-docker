@@ -2,6 +2,15 @@
 
 redis-server /etc/redis/redis.conf
 
+echo "Testing redis status..."
+X="$(redis-cli ping)"
+while  [ "${X}" != "PONG" ]; do
+        echo "redis not yet ready"
+        sleep 1
+        X="$(redis-cli ping)"
+done
+echo "Redis ready."
+
 echo "Restarting services"
 service openvas-scanner restart
 service openvas-manager restart
@@ -11,5 +20,8 @@ echo "Reloading NVTs"
 openvasmd --rebuild --progress
 echo "Checking setup"
 ./openvas-check-setup --v9
-echo "Tailing logs"
-tail -F /var/log/openvas/*
+
+if [ -z "$BUILD" ]; then
+  echo "Tailing logs"
+  tail -F /var/log/openvas/*
+fi

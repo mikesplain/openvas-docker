@@ -2,10 +2,14 @@
 
 redis-server /etc/redis/redis.conf
 
+echo "Restarting services"
 service openvas-scanner restart
 service openvas-manager restart
 service openvas-gsa restart
-openvasmd --rebuild --progress
-./openvas-check-setup --v9
 
+echo "Reloading NVTs"
+openvasmd --rebuild --progress
+echo "Checking setup"
+./openvas-check-setup --v9
+echo "Tailing logs"
 tail -F /var/log/openvas/*

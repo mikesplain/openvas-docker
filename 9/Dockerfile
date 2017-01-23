@@ -52,7 +52,11 @@ RUN mkdir -p /var/run/redis && \
     service openvas-manager restart && \
     service openvas-gsa restart && \
     openvasmd --rebuild --progress && \
-    ./openvas-check-setup --v9
+    ./openvas-check-setup --v9 && \
+    service openvas-scanner stop && \
+    service openvas-manager stop && \
+    service openvas-gsa stop && \
+    service redis-server stop
 
 CMD /start
 EXPOSE 4000

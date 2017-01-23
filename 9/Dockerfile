@@ -6,7 +6,7 @@ ADD start /start
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install software-properties-common -yq && \
+    apt-get install software-properties-common --no-install-recommends -yq && \
     add-apt-repository ppa:mrazavi/openvas -y && \
     apt-get update
 
@@ -28,6 +28,7 @@ RUN apt-get install openvas9 \
                     texlive-latex-base \
                     texlive-latex-extra \
                     texlive-latex-recommended \
+                    sendmail \
                     -yq && \
     apt-get purge \
         texlive-pstricks-doc \
@@ -45,7 +46,12 @@ RUN mkdir -p /var/run/redis && \
     chmod +x /openvas-check-setup && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
-    greenbone-certdata-sync
+    greenbone-certdata-sync && \
+    BUILD=true /start && \
+    service openvas-scanner stop && \
+    service openvas-manager stop && \
+    service openvas-gsa stop && \
+    service redis-server stop
 
 CMD /start
 EXPOSE 4000

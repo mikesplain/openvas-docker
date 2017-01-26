@@ -8,9 +8,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \
     add-apt-repository ppa:mrazavi/openvas -y && \
-    apt-get update
-
-RUN apt-get install openvas9 \
+    apt-get update && \
+    apt-get install openvas9 \
                     libopenvas9-dev \
                     sqlite3 \
                     wget \
@@ -36,7 +35,9 @@ RUN apt-get install openvas9 \
         texlive-latex-extra-doc \
         texlive-latex-base-doc \
         texlive-latex-recommended-doc \
+        software-properties-common \
         -yq && \
+    apt-get autoremove -yq && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/redis && \

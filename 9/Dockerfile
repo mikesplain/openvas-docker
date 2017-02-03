@@ -3,7 +3,8 @@ FROM ubuntu:16.04
 ADD config/redis.config /etc/redis/redis.config
 ADD start /start
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    OV_PASSWORD=admin
 
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \

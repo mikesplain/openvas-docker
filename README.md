@@ -20,6 +20,8 @@ Usage
 Simply run:
 
 ```
+# latest (9)
+docker run -d -p 4000:4000 --name openvas mikesplain/openvas
 # 9
 docker run -d -p 4000:4000 --name openvas mikesplain/openvas:9
 # 8

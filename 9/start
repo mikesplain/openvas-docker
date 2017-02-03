@@ -28,7 +28,7 @@ openvasmd --rebuild --progress
 if [ -n "$SETUPUSER" ]; then
   echo "Setting up user"
   /usr/sbin/openvasmd openvasmd --create-user=admin
-  /usr/sbin/openvasmd--user=admin --new-password=$OV_PASSWORD
+  /usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
 
 echo "Checking setup"

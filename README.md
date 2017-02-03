@@ -49,6 +49,20 @@ To run bash inside the container run:
 docker exec -it openvas bash
 ```
 
+#### Volume Support
+We now support volumes. Simply mount your data directory to `/var/lib/openvas/mgr/`:
+```
+mkdir data
+docker run -d -p 4000:4000 -v $(pwd)/data:/var/lib/openvas/mgr/ --name openvas mikesplain/openvas
+```
+Note, your local directory must exist prior to running.
+
+#### Set Admin Password
+The admin password can be changed by specifying a password at runtime using the env variable `OV_PASSWORD`:
+```
+docker run -d -p 4000:4000 -e OV_PASSWORD=securepassword41 --name openvas mikesplain/openvas
+```
+
 Contributing
 ------------
 

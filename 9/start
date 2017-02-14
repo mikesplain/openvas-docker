@@ -17,6 +17,10 @@ echo "Redis ready."
 echo "Checking for empty volume"
 [ -e "$DATAVOL/tasks.db" ] || SETUPUSER=true
 
+echo "Services configuration"
+sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0"/' /etc/init.d/openvas-manager
+sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390"/' /etc/init.d/openvas-gsa
+
 echo "Restarting services"
 service openvas-scanner restart
 service openvas-manager restart

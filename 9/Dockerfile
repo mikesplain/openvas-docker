@@ -53,7 +53,10 @@ RUN mkdir -p /var/run/redis && \
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \
-    service redis-server stop
+    service redis-server stop && \
+    sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0"/' /etc/init.d/openvas-manager && \
+    sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390"/' /etc/init.d/openvas-gsa
+
 
 CMD /start
 EXPOSE 4000

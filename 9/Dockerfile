@@ -17,29 +17,28 @@ RUN apt-get update && \
     add-apt-repository ppa:mrazavi/openvas -y && \
     apt-get clean && \
     apt-get update && \
-    apt-get install openvas9 \
-                    libopenvas9-dev \
-                    sqlite3 \
-                    wget \
-                    curl \
+    apt-get install alien \
                     bzip2 \
-                    nmap \
-                    sqlite3 \
-                    nsis \
-                    rpm \
-                    alien \
+                    curl \
+                    dirb \
                     dnsutils \
+                    libopenvas9-dev \
                     net-tools \
-                    rsync \
+                    nikto \
+                    nmap \
+                    nsis \
                     openssh-client \
+                    openvas9 \
+                    rpm \
+                    rsync \
+                    sendmail \
+                    sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \
                     texlive-latex-recommended \
-                    sendmail \
-                    dirb \
-                    nikto \
                     w3af \
                     wapiti \
+                    wget \
                     -yq && \
     apt-get purge \
         texlive-pstricks-doc \

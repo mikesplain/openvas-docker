@@ -6,6 +6,11 @@ ADD start /start
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
 
+# Select closest mirrors to make apt-get faster
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \
     add-apt-repository ppa:mrazavi/openvas -y && \

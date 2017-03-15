@@ -13,7 +13,9 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial main restricted uni
 
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \
+    add-apt-repository ppa:mikesplain/openvas -y && \
     add-apt-repository ppa:mrazavi/openvas -y && \
+    apt-get clean && \
     apt-get update && \
     apt-get install openvas9 \
                     libopenvas9-dev \
@@ -34,6 +36,10 @@ RUN apt-get update && \
                     texlive-latex-extra \
                     texlive-latex-recommended \
                     sendmail \
+                    dirb \
+                    nikto \
+                    w3af \
+                    wapiti \
                     -yq && \
     apt-get purge \
         texlive-pstricks-doc \

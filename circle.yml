@@ -4,8 +4,8 @@ machine:
 
 test:
   override:
-    - 9/ci.sh
-      timeout: 1800
+    - 9/ci.sh:
+        timeout: 1800
 
 general:
   artifacts:

@@ -4,9 +4,8 @@ machine:
 
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) 8/ci.sh ;; 1) 9/ci.sh ;; esac:
-        parallel: true
-        timeout: 1800
+    - 9/ci.sh
+      timeout: 1800
 
 general:
   artifacts:

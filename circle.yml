@@ -2,6 +2,8 @@ version: 2
 jobs:
   build:
     working_directory: ~/openvas
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - checkout
       - setup_docker_engine

@@ -6,29 +6,39 @@ ADD start /start
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
 
+# Select closest mirrors to make apt-get faster
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \
+    add-apt-repository ppa:mikesplain/openvas -y && \
     add-apt-repository ppa:mrazavi/openvas -y && \
+    apt-get clean && \
     apt-get update && \
-    apt-get install openvas9 \
-                    libopenvas9-dev \
-                    sqlite3 \
-                    wget \
-                    curl \
+    apt-get install alien \
                     bzip2 \
-                    nmap \
-                    sqlite3 \
-                    nsis \
-                    rpm \
-                    alien \
+                    curl \
+                    dirb \
                     dnsutils \
+                    libopenvas9-dev \
                     net-tools \
-                    rsync \
+                    nikto \
+                    nmap \
+                    nsis \
                     openssh-client \
+                    openvas9 \
+                    rpm \
+                    rsync \
+                    sendmail \
+                    sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \
                     texlive-latex-recommended \
-                    sendmail \
+                    w3af \
+                    wapiti \
+                    wget \
                     -yq && \
     apt-get purge \
         texlive-pstricks-doc \
@@ -40,6 +50,12 @@ RUN apt-get update && \
         -yq && \
     apt-get autoremove -yq && \
     rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/Arachni/arachni/releases/download/v1.5/arachni-1.5-0.5.11-linux-x86_64.tar.gz && \
+    tar -zxvf arachni-1.5-0.5.11-linux-x86_64.tar.gz && \
+    mv arachni-1.5-0.5.11 /opt/arachni && \
+    ln -s /opt/arachni/bin/* /usr/local/bin/ && \
+    rm -rf arachni*
 
 RUN mkdir -p /var/run/redis && \
     wget -q --no-check-certificate \

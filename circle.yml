@@ -1,16 +1,12 @@
-machine:
-  services:
-    - docker
-
-test:
-  override:
-    - case $CIRCLE_NODE_INDEX in 0) 8/ci.sh ;; 1) 9/ci.sh ;; esac:
-        parallel: true
-        timeout: 1800
-
-general:
-  artifacts:
-    - "8/logs"
-    - "8/images"
-    - "9/logs"
-    - "9/images"
+version: 2
+jobs:
+  build:
+    steps:
+      - setup_docker_engine
+      - run: 9/ci.sh
+      - store_artifacts:
+          path: 9/logs
+          destination: 9-logs
+      - store_artifacts:
+          path: 9/images
+          destination: 9-images

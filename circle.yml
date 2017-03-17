@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/openvas
     steps:
       - setup_docker_engine
       - run: 9/ci.sh

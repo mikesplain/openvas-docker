@@ -3,6 +3,7 @@ jobs:
   build:
     working_directory: ~/openvas
     steps:
+      - checkout
       - setup_docker_engine
       - run: 9/ci.sh
       - store_artifacts:

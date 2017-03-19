@@ -9,7 +9,7 @@ jobs:
           name: Add deps
           command: |
             set -x
-            apk --no-cache add git
+            apk --no-cache add openssh git
       - checkout
       - setup_docker_engine
       - run: 9/ci.sh

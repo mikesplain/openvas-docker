@@ -57,6 +57,8 @@ RUN mkdir -p /var/run/redis && \
       https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup \
       -O /openvas-check-setup && \
     chmod +x /openvas-check-setup && \
+    sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0"/' /etc/init.d/openvas-manager && \
+    sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390"/' /etc/init.d/openvas-gsa && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
     greenbone-certdata-sync && \

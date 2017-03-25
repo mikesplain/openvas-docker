@@ -49,6 +49,12 @@ To run bash inside the container run:
 docker exec -it openvas bash
 ```
 
+#### OpenVAS Manager
+To use OpenVAS Manager, add port `9390` to you docker run command:
+```
+docker run -d -p 443:443 -p 9390:9390 --name openvas mikesplain/openvas
+```
+
 #### Volume Support
 We now support volumes. Simply mount your data directory to `/var/lib/openvas/mgr/`:
 ```

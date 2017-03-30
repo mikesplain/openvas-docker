@@ -71,9 +71,9 @@ RUN BUILD=true /start && \
     service openvas-gsa stop && \
     service redis-server stop
 
-RUN apt-get update
-RUN apt-get install -y postfix supervisor libsasl2-modules syslog-ng-core mailutils
-RUN apt-get autoremove -yq
+RUN apt-get update && \
+    apt-get install -y postfix supervisor libsasl2-modules syslog-ng-core mailutils && \
+    apt-get autoremove -yq
 
 # environment variables
 ENV MANDRILL_USERNAME MANDRILL_USERNAME
@@ -91,12 +91,10 @@ ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
 # supervisord
 ADD supervisord.conf /etc/supervisor
 
-# RUN    chmod 777 /var/log/redis/redis-server.log
-
 ADD run.sh /
 
-RUN chmod +x /var/log/redis/redis-server.log
-RUN chmod +x /run.sh
+RUN chmod +x /var/log/redis/redis-server.log && \
+    chmod +x /run.sh
 
 CMD /start && /run.sh
 

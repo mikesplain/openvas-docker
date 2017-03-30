@@ -34,7 +34,19 @@ fi
 echo "Checking setup"
 ./openvas-check-setup --v9
 
-if [ -z "$BUILD" ]; then
-  echo "Tailing logs"
-  tail -F /var/log/openvas/*
+if [ -z "$SECONDRUN" ]; then
+  echo "This is the first time /start has run"
 fi
+
+if [ -n "$SECONDRUN" ]; then
+  echo "This is not the first time /start has run"
+  /usr/bin/supervisord
+fi
+
+SECONDRUN="True"
+
+
+#if [ -z "$BUILD" ]; then
+#  echo "Tailing logs"
+#  tail -F /var/log/openvas/*
+#fi

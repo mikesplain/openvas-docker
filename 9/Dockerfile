@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 
 ADD config/redis.config /etc/redis/redis.config
-ADD start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
@@ -62,12 +61,44 @@ RUN mkdir -p /var/run/redis && \
     sed -i 's/PORT_NUMBER=4000/PORT_NUMBER=443/' /etc/default/openvas-gsa && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
-    greenbone-certdata-sync && \
-    BUILD=true /start && \
+    greenbone-certdata-sync
+
+ADD start /start
+
+RUN BUILD=true /start && \
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \
     service redis-server stop
 
-CMD /start
-EXPOSE 4000
+RUN apt-get update
+RUN apt-get install -y postfix supervisor libsasl2-modules syslog-ng-core mailutils
+RUN apt-get autoremove -yq
+
+# environment variables
+ENV MANDRILL_USERNAME MANDRILL_USERNAME
+ENV MANDRILL_KEY MANDRIL_KEY
+
+# postfix
+ADD sasl_passwd /etc/postfix
+ADD main.cf /etc/postfix
+ADD postfix-supervisord.conf /etc/supervisor/conf.d/postfix.conf
+
+# syslog-ng
+ADD syslog-ng-supervisor.conf /etc/supervisor/conf.d/syslog-ng.conf
+ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
+
+# supervisord
+ADD supervisord.conf /etc/supervisor
+
+# RUN    chmod 777 /var/log/redis/redis-server.log
+
+ADD run.sh /
+
+RUN chmod +x /var/log/redis/redis-server.log
+RUN chmod +x /run.sh
+
+CMD /start && /run.sh
+
+EXPOSE 25
+EXPOSE 443

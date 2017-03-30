@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ADD config/redis.config /etc/redis/redis.config
+COPY config/redis.config /etc/redis/redis.config
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
@@ -51,6 +51,8 @@ RUN wget https://github.com/Arachni/arachni/releases/download/v1.5/arachni-1.5-0
     ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     rm -rf arachni*
 
+COPY start /start
+
 RUN mkdir -p /var/run/redis && \
     wget -q --no-check-certificate \
       https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup \
@@ -61,11 +63,8 @@ RUN mkdir -p /var/run/redis && \
     sed -i 's/PORT_NUMBER=4000/PORT_NUMBER=443/' /etc/default/openvas-gsa && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
-    greenbone-certdata-sync
-
-ADD start /start
-
-RUN BUILD=true /start && \
+    greenbone-certdata-sync && \
+    BUILD=true /start && \ 
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \
@@ -75,28 +74,18 @@ RUN apt-get update && \
     apt-get install -y postfix supervisor libsasl2-modules syslog-ng-core mailutils && \
     apt-get autoremove -yq
 
-# environment variables
-ENV MANDRILL_USERNAME MANDRILL_USERNAME
-ENV MANDRILL_KEY MANDRIL_KEY
+COPY sasl_passwd_template /
+COPY main.cf_template /
 
-# postfix
-ADD sasl_passwd /etc/postfix
-ADD main.cf /etc/postfix
-ADD postfix-supervisord.conf /etc/supervisor/conf.d/postfix.conf
+RUN chmod +x /var/log/redis/redis-server.log 
 
-# syslog-ng
-ADD syslog-ng-supervisor.conf /etc/supervisor/conf.d/syslog-ng.conf
-ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
+ENV BUILD=""
 
-# supervisord
-ADD supervisord.conf /etc/supervisor
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
 
-ADD run.sh /
-
-RUN chmod +x /var/log/redis/redis-server.log && \
-    chmod +x /run.sh
-
-CMD /start && /run.sh
+ENTRYPOINT ["dumb-init","--"]
+CMD /start
 
 EXPOSE 25
 EXPOSE 443

@@ -22,6 +22,7 @@ service openvas-scanner restart
 service openvas-manager restart
 service openvas-gsa restart
 
+
 echo "Reloading NVTs"
 openvasmd --rebuild --progress
 
@@ -34,19 +35,22 @@ fi
 echo "Checking setup"
 ./openvas-check-setup --v9
 
-if [ -z "$SECONDRUN" ]; then
-  echo "This is the first time /start has run"
+if [ -f /sasl_passwd_template ]; then
+  echo "Template is present, modifying main.cf and sasl_passwd"
+
+  set -o nounset
+  set -o errexit
+  set -o pipefail
+
+  envsubst < "/sasl_passwd_template" > "/etc/postfix/sasl_passwd"
+  envsubst < "/main.cf_template" > "/etc/postfix/main.cf"
+
+  /usr/sbin/postmap /etc/postfix/sasl_passwd
+
+  service postfix restart
 fi
 
-if [ -n "$SECONDRUN" ]; then
-  echo "This is not the first time /start has run"
-  /usr/bin/supervisord
+if [ -z "$BUILD" ]; then
+  echo "Tailing logs"
+  tail -F /var/log/openvas/*
 fi
-
-SECONDRUN="True"
-
-
-#if [ -z "$BUILD" ]; then
-#  echo "Tailing logs"
-#  tail -F /var/log/openvas/*
-#fi

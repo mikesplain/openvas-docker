@@ -36,6 +36,8 @@ echo "Checking setup"
 ./openvas-check-setup --v9
 
 if [ -f /sasl_passwd_template ]; then
+  echo "Configuring postfix"
+
   set -o nounset
   set -o errexit
   set -o pipefail

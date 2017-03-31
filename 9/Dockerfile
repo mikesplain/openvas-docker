@@ -70,4 +70,4 @@ RUN mkdir -p /var/run/redis && \
     service redis-server stop
 
 CMD /start
-EXPOSE 4000
+EXPOSE 443 9390

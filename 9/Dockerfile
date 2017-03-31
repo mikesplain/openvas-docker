@@ -77,8 +77,6 @@ RUN apt-get update && \
 COPY sasl_passwd_template /
 COPY main.cf_template /
 
-RUN chmod +x /var/log/redis/redis-server.log 
-
 ENV BUILD=""
 
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init

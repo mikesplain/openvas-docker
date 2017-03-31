@@ -36,8 +36,6 @@ echo "Checking setup"
 ./openvas-check-setup --v9
 
 if [ -f /sasl_passwd_template ]; then
-  echo "Template is present, modifying main.cf and sasl_passwd"
-
   set -o nounset
   set -o errexit
   set -o pipefail

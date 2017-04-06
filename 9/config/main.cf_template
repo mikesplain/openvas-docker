@@ -5,5 +5,5 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
 # use STARTTLS for encryption
 smtp_use_tls = yes
-relayhost = [$SMTP_HOSTNAME]:$SMTP_PORT
+relayhost = [$OV_SMTP_HOSTNAME]:$OV_SMTP_PORT
 mynetworks = 0.0.0.0/0

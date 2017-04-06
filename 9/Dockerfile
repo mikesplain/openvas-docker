@@ -1,6 +1,9 @@
 FROM ubuntu:16.04
 
 COPY config/redis.config /etc/redis/redis.config
+COPY config/sasl_passwd_template /
+COPY config/main.cf_template /
+COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
@@ -17,15 +20,16 @@ RUN apt-get update && \
                     dirb \
                     dnsutils \
                     libopenvas9-dev \
+                    libsasl2-modules \
                     net-tools \
                     nikto \
                     nmap \
                     nsis \
+                    postfix \
                     openssh-client \
                     openvas9 \
                     rpm \
                     rsync \
-                    sendmail \
                     sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \
@@ -51,8 +55,6 @@ RUN wget https://github.com/Arachni/arachni/releases/download/v1.5/arachni-1.5-0
     ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     rm -rf arachni*
 
-COPY start /start
-
 RUN mkdir -p /var/run/redis && \
     wget -q --no-check-certificate \
       https://svn.wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup \
@@ -64,26 +66,15 @@ RUN mkdir -p /var/run/redis && \
     greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
     greenbone-certdata-sync && \
-    BUILD=true /start && \ 
+    BUILD=true /start && \
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \
     service redis-server stop
 
-RUN apt-get update && \
-    apt-get install -y postfix supervisor libsasl2-modules syslog-ng-core mailutils && \
-    apt-get autoremove -yq
-
-COPY sasl_passwd_template /
-COPY main.cf_template /
 
 ENV BUILD=""
 
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
-RUN chmod +x /usr/local/bin/dumb-init
-
-ENTRYPOINT ["dumb-init","--"]
 CMD /start
 
-EXPOSE 25
-EXPOSE 443
+EXPOSE 443 9390

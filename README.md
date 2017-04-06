@@ -70,9 +70,9 @@ docker run -d -p 443:443 -e OV_PASSWORD=securepassword41 --name openvas mikespla
 ```
 
 #### Email Support
-To configure the postfix server, provide the following env variables at runtime: `SMTP_HOSTNAME`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_KEY`
+To configure the postfix server, provide the following env variables at runtime: `OV_SMTP_HOSTNAME`, `OV_SMTP_PORT`, `OV_SMTP_USERNAME`, `OV_SMTP_KEY`
 ```
-docker run -d -p 443:443 -e SMTP_HOSTNAME=smtp.example.com -e SMTP_PORT=587 -e SMTP_USERNAME=username@example.com -e SMTP_KEY=g0bBl3de3Go0k --name openvas mikesplain/openvas
+docker run -d -p 443:443 -e OV_SMTP_HOSTNAME=smtp.example.com -e OV_SMTP_PORT=587 -e OV_SMTP_USERNAME=username@example.com -e OV_SMTP_KEY=g0bBl3de3Go0k --name openvas mikesplain/openvas
 ```
 
 

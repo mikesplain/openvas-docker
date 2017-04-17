@@ -8,7 +8,7 @@ redis-server /etc/redis/redis.conf
 echo "Testing redis status..."
 X="$(redis-cli ping)"
 while  [ "${X}" != "PONG" ]; do
-        echo "redis not yet ready"
+        echo "Redis not yet ready..."
         sleep 1
         X="$(redis-cli ping)"
 done

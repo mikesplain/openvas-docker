@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t openvas .
+
+script:
+  - sh test.sh
+
+notifications:
+  slack: $SLACK_INFO

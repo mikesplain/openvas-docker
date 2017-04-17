@@ -30,6 +30,8 @@ RUN apt-get update && \
                     openvas9 \
                     rpm \
                     rsync \
+                    sendmail \
+                    smbclient \
                     sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \

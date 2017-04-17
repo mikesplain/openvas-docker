@@ -28,7 +28,7 @@ docker run -d -p 443:443 --name openvas mikesplain/openvas:9
 docker run -d -p 443:443 --name openvas mikesplain/openvas:8
 ```
 
-This will grab the container from the docker registry and start it up.  Openvas startup can take some time (4-5 minutes while NVT's are scanned and databases rebuilt), so be patient.  Once you see a `It seems like your OpenVAS-9 installation is OK.` process in the logs, the web ui is good to go.  Goto `https://<machinename>
+This will grab the container from the docker registry and start it up.  Openvas startup can take some time (4-5 minutes while NVT's are scanned and databases rebuilt), so be patient.  Once you see a `It seems like your OpenVAS-9 installation is OK.` process in the logs, the web ui is good to go.  Goto `https://<machinename>`
 
 ```
 Username: admin

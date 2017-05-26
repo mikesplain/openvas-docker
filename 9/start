@@ -2,6 +2,12 @@
 
 DATAVOL=/var/lib/openvas/mgr/
 OV_PASSWORD=${OV_PASSWORD:-admin}
+WEB_CERT_FILE=${WEB_CERT_FILE:-""}
+WEB_KEY_FILE=${WEB_KEY_FILE:-""}
+
+if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then 
+        echo 'DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390 -k '$WEB_KEY_FILE' -c '$WEB_CERT_FILE'"' >> /etc/default/openvas-gsa
+fi
 
 redis-server /etc/redis/redis.conf
 

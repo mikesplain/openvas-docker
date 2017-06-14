@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 
 ADD config/redis.config /etc/redis/redis.config
 ADD start /start
+ADD ldapUserSync/* /ldapUserSync/
+
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin
@@ -35,6 +37,7 @@ RUN apt-get update && \
                     w3af \
                     wapiti \
                     wget \
+                    ldap-utils \
                     -yq && \
     apt-get purge \
         texlive-pstricks-doc \

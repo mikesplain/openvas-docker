@@ -76,7 +76,24 @@ docker exec -it openvas bash
 greenbone-nvt-sync
 openvasmd --rebuild --progress
 ```
+#### Docker compose
 
+For simplicity a docker-compose.yml file is provided, as well as configuration for Nginx as a reverse proxy, with the following features:
+
+* Nginx as a reverse proxy
+* Redirect from port 80 (http) to port 433 (https)
+* Automatic SSL certificates from [Let's Encrypt](https://letsencrypt.org/)
+* A cron that updates daily the NVTs
+
+To run:
+
+* Change "example.com" in the following files:
+  * [docker-compose.yml](docker-compose.yml)
+  * [conf/nginx.conf](conf/nginx.conf)
+  * [conf/nginx_ssl.conf](conf/nginx_ssl.conf)
+* Change the "OV_PASSWORD" enviromental variable in [docker-compose.yml](docker-compose.yml)
+* Install the latest [docker-compose](https://docs.docker.com/compose/install/)
+* run `docker-compose up -d`
 
 Contributing
 ------------

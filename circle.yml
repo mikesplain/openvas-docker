@@ -12,7 +12,9 @@ jobs:
             apk --no-cache add openssh git bash --no-progress
       - checkout
       - setup_docker_engine
-      - run: 9/ci.sh
+      - run: 
+          command: 9/ci.sh
+          no_output_timeout: 1h
       - store_artifacts:
           path: 9/logs
           destination: 9-logs

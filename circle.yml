@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/openvas
     docker:
-      - image: docker:17.03.0-ce
+      - image: docker:17.09.0-ce
     steps:
       - run:
           name: Add deps
@@ -11,8 +11,10 @@ jobs:
             set -x
             apk --no-cache add openssh git bash --no-progress
       - checkout
-      - setup_docker_engine
-      - run: 9/ci.sh
+      - setup_remote_docker
+      - run: 
+          command: 9/ci.sh
+          no_output_timeout: 1h
       - store_artifacts:
           path: 9/logs
           destination: 9-logs

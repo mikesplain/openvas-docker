@@ -47,7 +47,7 @@ RUN apt-get update && \
     apt-get autoremove -yq && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget https://github.com/Arachni/arachni/releases/download/v1.5/arachni-1.5-0.5.11-linux-x86_64.tar.gz && \
+RUN wget -q https://github.com/Arachni/arachni/releases/download/v1.5/arachni-1.5-0.5.11-linux-x86_64.tar.gz && \
     tar -zxf arachni-1.5-0.5.11-linux-x86_64.tar.gz && \
     mv arachni-1.5-0.5.11 /opt/arachni && \
     ln -s /opt/arachni/bin/* /usr/local/bin/ && \

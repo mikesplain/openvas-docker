@@ -3,5 +3,8 @@ sudo: required
 services:
   - docker
 
+before_install:
+- docker login -u="${QUAY_USER}" -p="${QUAY_PASSWORD}" quay.io
+
 script:
 - 9/ci.sh

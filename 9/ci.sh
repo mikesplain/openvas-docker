@@ -4,6 +4,7 @@ cd $(dirname $0)
 mkdir -p logs images
 
 docker build -t openvas9 . 
-docker save openvas9 | gzip -c  > images/openvas9.tar.gz
+docker tag openvas9 quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
+docker push quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
 ./test.sh 
 docker logs openvas9

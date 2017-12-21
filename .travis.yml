@@ -1,0 +1,7 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+- 9/ci.sh

@@ -61,9 +61,9 @@ RUN mkdir -p /var/run/redis && \
     sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0"/' /etc/init.d/openvas-manager && \
     sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390"/' /etc/init.d/openvas-gsa && \
     sed -i 's/PORT_NUMBER=4000/PORT_NUMBER=443/' /etc/default/openvas-gsa && \
-    greenbone-nvt-sync && \
-    greenbone-scapdata-sync && \
-    greenbone-certdata-sync && \
+    greenbone-nvt-sync > /dev/null && \
+    greenbone-scapdata-sync > /dev/null && \
+    greenbone-certdata-sync > /dev/null && \
     BUILD=true /start && \
     service openvas-scanner stop && \
     service openvas-manager stop && \

@@ -10,5 +10,5 @@ done
 
 docker logs openvas9 | grep -E 'It seems like your OpenVAS-9 installation is OK'
 
-docker rm -f openvas9
+
 

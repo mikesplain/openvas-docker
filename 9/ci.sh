@@ -3,7 +3,14 @@
 cd $(dirname $0)
 mkdir -p logs images
 
-docker build -t openvas9 . 2>&1 | tee logs/build.log
-docker save openvas9 | gzip -c  > images/openvas9.tar.gz
-./test.sh 2>&1 | tee logs/test.log
-docker logs openvas9 2>&1 | tee logs/container.log
+docker build -t openvas9 . 
+docker tag openvas9 quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
+docker push quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
+./test.sh 
+
+if [ $? -eq 1]; then
+    echo "Test failure. Look in log to debug."
+    exit 1
+fi
+
+echo "Test Complete!"

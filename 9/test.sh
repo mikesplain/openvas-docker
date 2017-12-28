@@ -8,7 +8,6 @@ until docker logs openvas9 | grep -E 'It seems like your OpenVAS-9 installation 
   sleep 5
 done
 
-docker logs openvas9 | grep -E 'It seems like your OpenVAS-9 installation is OK'
 
 
 

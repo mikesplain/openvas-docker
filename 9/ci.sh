@@ -7,4 +7,5 @@ docker build -t openvas9 .
 docker tag openvas9 quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
 docker push quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
 ./test.sh 
-docker logs openvas9
+
+echo "Test Complete!"

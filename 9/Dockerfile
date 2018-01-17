@@ -36,6 +36,7 @@ RUN apt-get update && \
                     wapiti \
                     wget \
                     -yq && \
+    apt-get upgrade -yq && \
     apt-get purge \
         texlive-pstricks-doc \
         texlive-pictures-doc \

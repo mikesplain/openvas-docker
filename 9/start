@@ -6,7 +6,10 @@ WEB_CERT_FILE=${WEB_CERT_FILE:-""}
 WEB_KEY_FILE=${WEB_KEY_FILE:-""}
 
 if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then 
-        echo 'DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390 -k '$WEB_KEY_FILE' -c '$WEB_CERT_FILE'"' >> /etc/default/openvas-gsa
+        rm -f /var/lib/openvas/CA/servercert.pem
+        rm -f /var/lib/openvas/private/CA/serverkey.pem
+        ln -s "$WEB_CERT_FILE" /var/lib/openvas/CA/servercert.pem
+        ln -s "$WEB_KEY_FILE" /var/lib/openvas/private/CA/serverkey.pem
 fi
 
 redis-server /etc/redis/redis.conf

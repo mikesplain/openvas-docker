@@ -78,6 +78,7 @@ Occasionally you'll need to update NVTs. We update the container about once a we
 docker exec -it openvas bash
 ## inside container
 greenbone-nvt-sync
+openvasmd --rebuild --progress
 greenbone-certdata-sync
 greenbone-scapdata-sync
 openvasmd --update --verbose --progress
@@ -85,7 +86,26 @@ openvasmd --update --verbose --progress
 /etc/init.d/openvas-manager restart
 /etc/init.d/openvas-scanner restart
 ```
-#### LDAP Support
+#### Docker compose (experimental)
+
+For simplicity a docker-compose.yml file is provided, as well as configuration for Nginx as a reverse proxy, with the following features:
+
+* Nginx as a reverse proxy
+* Redirect from port 80 (http) to port 433 (https)
+* Automatic SSL certificates from [Let's Encrypt](https://letsencrypt.org/)
+* A cron that updates daily the NVTs
+
+To run:
+
+* Change "example.com" in the following files:
+  * [docker-compose.yml](docker-compose.yml)
+  * [conf/nginx.conf](conf/nginx.conf)
+  * [conf/nginx_ssl.conf](conf/nginx_ssl.conf)
+* Change the "OV_PASSWORD" enviromental variable in [docker-compose.yml](docker-compose.yml)
+* Install the latest [docker-compose](https://docs.docker.com/compose/install/)
+* run `docker-compose up -d`
+
+#### LDAP Support (experimental)
 Openvas do not support full ldap integration but only per-user authentication. A workaround is in place here by syncing ldap admin user(defined by `LDAP_ADMIN_FILTER `) with openvas admin users everytime the app start up.  To use this, just need to specify the required ldap env variables:
 ```
 docker run -d -p 443:443 -p 9390:9390 --name openvas -e LDAP_HOST=your.ldap.host -e LDAP_BIND_DN=uid=binduid,dc=company,dc=com -e LDAP_BASE_DN=cn=accounts,dc=company,dc=com -e LDAP_AUTH_DN=uid=%s,cn=users,cn=accounts,dc=company,dc=com -e LDAP_ADMIN_FILTER=memberOf=cn=admins,cn=groups,cn=accounts,dc=company,dc=com -e LDAP_PASSWORD=password -e OV_PASSWORD=admin mikesplain/openvas 

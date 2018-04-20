@@ -30,6 +30,7 @@ RUN apt-get update && \
                     sendmail \
                     smbclient \
                     sqlite3 \
+                    sshpass \
                     texlive-latex-base \
                     texlive-latex-extra \
                     texlive-latex-recommended \

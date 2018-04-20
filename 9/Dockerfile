@@ -29,6 +29,7 @@ RUN apt-get update && \
                     rsync \
                     sendmail \
                     smbclient \
+                    socat \
                     sqlite3 \
                     texlive-latex-base \
                     texlive-latex-extra \

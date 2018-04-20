@@ -46,6 +46,13 @@ To run bash inside the container run:
 docker exec -it openvas bash
 ```
 
+#### Specify DNS Hostname
+By default, the system only allows connections for the hostname "openvas".  To allow access using a custom DNS name, you must use this command:
+
+```
+docker run -d -p 443:443 -e PUBLIC_HOSTNAME=myopenvas.example.org --name openvas mikesplain/openvas
+```
+
 #### OpenVAS Manager
 To use OpenVAS Manager, add port `9390` to you docker run command:
 ```

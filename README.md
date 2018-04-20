@@ -71,7 +71,12 @@ Occasionally you'll need to update NVTs. We update the container about once a we
 docker exec -it openvas bash
 ## inside container
 greenbone-nvt-sync
-openvasmd --rebuild --progress
+greenbone-certdata-sync
+greenbone-scapdata-sync
+openvasmd --update --verbose --progress
+
+/etc/init.d/openvas-manager restart
+/etc/init.d/openvas-scanner restart
 ```
 
 

@@ -27,9 +27,9 @@ echo "Checking for empty volume"
 [ -e "$DATAVOL/tasks.db" ] || SETUPUSER=true
 
 echo "Restarting services"
-service openvas-scanner restart
-service openvas-manager restart
-service openvas-gsa restart
+/etc/init.d/openvas-scanner restart
+/etc/init.d/openvas-manager restart
+/etc/init.d/openvas-gsa restart
 
 echo "Reloading NVTs"
 openvasmd --rebuild --progress

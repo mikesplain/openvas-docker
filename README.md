@@ -73,7 +73,7 @@ The admin password can be changed by specifying a password at runtime using the 
 docker run -d -p 443:443 -e OV_PASSWORD=securepassword41 --name openvas mikesplain/openvas
 ```
 #### Update NVTs
-Occasionally you'll need to update NVTs. We update the container about once a week but you can updater you container by execing into the container and running a few commands:
+Occasionally you'll need to update NVTs. We update the container about once a week but you can update your container by execing into the container and running a few commands:
 ```
 docker exec -it openvas bash
 ## inside container

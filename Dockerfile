@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 
-ADD config/redis.config /etc/redis/redis.config
+ADD config /etc/redis/redis.config
 ADD start /start
-ADD ldapUserSync/* /ldapUserSync/
+ADD ldapUserSync /ldapUserSync/
 
 
 ENV DEBIAN_FRONTEND=noninteractive \

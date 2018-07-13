@@ -1,0 +1,79 @@
+version: 2
+jobs:
+  build_docker:
+    docker:
+      - image: ${REGISTRY_ENDPOINT}/circleci-alpine:2.9.6
+        auth:
+          username: _json_key
+          password: $GCLOUD_AUTH_JSON
+
+    working_directory: /usr/local/src/openvas-docker
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Generate VERSION file
+          command: |
+            git describe --always HEAD | sed 's/v//' > VERSION
+            cat VERSION
+
+      - run:
+          name: Build docker container
+          command: |
+            docker build  --build-arg APT_PASS=${APT_PASS} -t ${REGISTRY_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:$(cat VERSION) .
+            mkdir -p docker-cache
+            docker save -o docker-cache/built-image.tar ${REGISTRY_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:$(cat VERSION)
+
+      - save_cache:
+          key: built-containers-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - docker-cache
+            - VERSION
+
+  deploy_gke_to_staging:
+    docker:
+      - image: ${REGISTRY_ENDPOINT}/circleci-alpine:2.9.6
+        auth:
+          username: _json_key
+          password: $GCLOUD_AUTH_JSON
+
+    working_directory: /usr/local/src/openvas-docker
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - restore_cache:
+          key: built-containers-{{ .Environment.CIRCLE_SHA1 }}
+
+      - run:
+          name: Restore docker cache
+          command: docker load < docker-cache/built-image.tar
+
+      - run:
+          name: Login to google container registry
+          command: |
+            set -x
+            echo $GCLOUD_AUTH >> ${HOME}/gcloud-auth.base64
+            base64 -d ${HOME}/gcloud-auth.base64 > ${HOME}/gcloud-auth.json
+            rm ${HOME}/gcloud-auth.base64
+            /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-auth.json
+            docker login -u _json_key -p "$(cat ${HOME}/gcloud-auth.json)" https://eu.gcr.io
+
+      - run:
+          name: Deploy to gke
+          command: gke-deploy
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_docker:
+         context: org-shared-services
+      - deploy_gke_to_staging:
+         context: org-shared-services
+         requires:
+          - build_docker
+

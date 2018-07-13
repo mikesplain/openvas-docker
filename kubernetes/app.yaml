@@ -1,0 +1,79 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: $CIRCLE_PROJECT_REPONAME
+  namespace: $NAMESPACE
+spec:
+  serviceName: $CIRCLE_PROJECT_REPONAME
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $CIRCLE_PROJECT_REPONAME
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: $CIRCLE_PROJECT_REPONAME
+    spec:
+      containers:
+      - name: $CIRCLE_PROJECT_REPONAME
+        image: eu.gcr.io/thermeon-container-registry/$CIRCLE_PROJECT_REPONAME:$VERSION
+        ports:
+        - containerPort: 80
+        env:
+        - name: ServiceName
+          value: $CIRCLE_PROJECT_REPONAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: $CIRCLE_PROJECT_REPONAME
+  labels:
+    app: $CIRCLE_PROJECT_REPONAME
+  namespace: $NAMESPACE
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: $CIRCLE_PROJECT_REPONAME
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: $CIRCLE_PROJECT_REPONAME
+  namespace: $NAMESPACE
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.global-static-ip-name: $CIRCLE_PROJECT_REPONAME-$NAMESPACE-static-ip
+  labels:
+    app: $CIRCLE_PROJECT_REPONAME
+spec:
+  tls:
+    - secretName: $NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io-tls
+  backend:
+    serviceName: $CIRCLE_PROJECT_REPONAME
+    servicePort: 80
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: $NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io
+  namespace: $NAMESPACE
+spec:
+  secretName: $NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io-tls
+  issuerRef:
+    name: letsencrypt-$DEPLOY_ENV
+    kind: ClusterIssuer
+  commonName: '*.$NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io'
+  dnsNames:
+  - '*.$NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io'
+  acme:
+    config:
+    - dns01:
+        provider: prod-dns
+      domains:
+      - '*.$NAMESPACE.$DEPLOY_ENV.shared-services.$zone.thermeon.io'

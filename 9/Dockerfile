@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 COPY config/redis.config /etc/redis/redis.config
 COPY config/sasl_passwd_template /
 COPY config/main.cf_template /
-COPY ldapUserSync/* /ldapUserSync/
+COPY config/ldapUserSync/* /ldapUserSync/
 COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \

@@ -2,13 +2,22 @@
 
 DATAVOL=/var/lib/openvas/mgr/
 OV_PASSWORD=${OV_PASSWORD:-admin}
+WEB_CERT_FILE=${WEB_CERT_FILE:-""}
+WEB_KEY_FILE=${WEB_KEY_FILE:-""}
+
+if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then 
+        rm -f /var/lib/openvas/CA/servercert.pem
+        rm -f /var/lib/openvas/private/CA/serverkey.pem
+        ln -s "$WEB_CERT_FILE" /var/lib/openvas/CA/servercert.pem
+        ln -s "$WEB_KEY_FILE" /var/lib/openvas/private/CA/serverkey.pem
+fi
 
 redis-server /etc/redis/redis.conf
 
 echo "Testing redis status..."
 X="$(redis-cli ping)"
 while  [ "${X}" != "PONG" ]; do
-        echo "redis not yet ready"
+        echo "Redis not yet ready..."
         sleep 1
         X="$(redis-cli ping)"
 done
@@ -18,9 +27,9 @@ echo "Checking for empty volume"
 [ -e "$DATAVOL/tasks.db" ] || SETUPUSER=true
 
 echo "Restarting services"
-service openvas-scanner restart
-service openvas-manager restart
-service openvas-gsa restart
+/etc/init.d/openvas-scanner restart
+/etc/init.d/openvas-manager restart
+/etc/init.d/openvas-gsa restart
 
 
 echo "Reloading NVTs"
@@ -30,6 +39,61 @@ if [ -n "$SETUPUSER" ]; then
   echo "Setting up user"
   /usr/sbin/openvasmd openvasmd --create-user=admin
   /usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
+fi
+
+#
+# CA configuration (optional)
+#
+# Varaibles:
+# - CA_CERT
+# - CA_CERTS_DIR
+i=0
+# Add CA certs to the system if they are defined
+if [[ -n "$CA_CERT" && -e "$CA_CERT" ]]
+then
+  CA_CERTS_TO_ADD[((i++))]="$CA_CERT"
+fi
+
+
+if [[ -n "$CA_CERTS_DIR" && -e "$CA_CERTS_DIR" ]]
+then
+  for cert in `find $CA_CERTS_DIR -type f \( -iname \*.crt -o -iname \*.pem \)`
+  do
+    CA_CERTS_TO_ADD[((i++))]="$cert"
+  done
+fi
+
+for (( i = 0; i < ${#CA_CERTS_TO_ADD[@]}; i++))
+do
+  echo "Importing ${CA_CERTS_TO_ADD[${i}]} to system keystore as ${CA_CERTS_TO_ADD[${i}]##*/}"
+  cp ${CA_CERTS_TO_ADD[${i}]} /usr/local/share/ca-certificates/
+done
+
+if [ "$i" -gt "0" ]
+then
+  update-ca-certificates
+fi
+
+#
+# LDAP configuration (optional)
+#
+# Varaibles:
+# - LDAP_HOST
+# - LDAP_BIND_DN
+# - LDAP_BASE_DN 
+# - LDAP_AUTH_DN
+# - LDAP_ADMIN_FILTER
+# - LDAP_PASSWORD
+# - LDAP_USERNAME_ATTR 
+if [ -n "$LDAP_HOST" ] &&
+    [ -n "$LDAP_BIND_DN" ] &&
+    [ -n "$LDAP_BASE_DN" ] &&
+    [ -n "$LDAP_AUTH_DN" ] &&
+    [ -n "$LDAP_ADMIN_FILTER" ] &&
+    [ -n "$LDAP_PASSWORD" ]
+then
+  echo "Syncing Ldap admin users to openVAS..."
+  /ldapUserSync/ldapUserSync.py
 fi
 
 echo "Checking setup"

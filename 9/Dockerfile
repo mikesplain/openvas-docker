@@ -1,9 +1,10 @@
 FROM ubuntu:16.04
 
-ADD config/redis.config /etc/redis/redis.config
-ADD start /start
-ADD ldapUserSync/* /ldapUserSync/
-
+COPY config/redis.config /etc/redis/redis.config
+COPY config/sasl_passwd_template /
+COPY config/main.cf_template /
+COPY ldapUserSync/* /ldapUserSync/
+COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin \
@@ -21,15 +22,16 @@ RUN apt-get update && \
                     dirb \
                     dnsutils \
                     libopenvas9-dev \
+                    libsasl2-modules \
                     net-tools \
                     nikto \
                     nmap \
                     nsis \
+                    postfix \
                     openssh-client \
                     openvas9 \
                     rpm \
                     rsync \
-                    sendmail \
                     smbclient \
                     socat \
                     sqlite3 \
@@ -78,5 +80,9 @@ RUN mkdir -p /var/run/redis && \
     service openvas-gsa stop && \
     service redis-server stop
 
+
+ENV BUILD=""
+
 CMD /start
+
 EXPOSE 443 9390

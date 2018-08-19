@@ -64,7 +64,7 @@ RUN wget -q https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-
 
 RUN mkdir -p /var/run/redis && \
     wget -q --no-check-certificate \
-    https://wald.intevation.org/svn/openvas/trunk/tools/openvas-check-setup \
+    https://raw.githubusercontent.com/kurobeats/OpenVas-Management-Scripts/master/openvas-check-setup \
       -O /openvas-check-setup && \
     chmod +x /openvas-check-setup && \
     sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0"/' /etc/init.d/openvas-manager && \

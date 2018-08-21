@@ -1,13 +1,22 @@
 version: '3'
 services:
   openvas:
-      restart: always
-      image: mikesplain/openvas
-      hostname: openvas
-      expose:
-        - "443"
-      volumes:
-        - "./data/openvas:/var/lib/openvas/mgr/"
-      environment:
-        # CHANGE THIS !
-        OV_PASSWORD: securepassword41
+    build: ./base
+    image: mikesplain/openvas
+    hostname: openvas
+    expose:
+      - "443"
+    volumes:
+    - redis:/var/run/redis
+      # - "./data/openvas:/var/lib/openvas/mgr/"
+    environment:
+      # CHANGE THIS !
+      OV_PASSWORD: admin
+  redis:
+    image: redis:alpine3.8
+    volumes:
+    - ./base/config/redis.config:/etc/redis/redis.config
+    - redis:/var/run/redis
+
+volumes:
+  redis:

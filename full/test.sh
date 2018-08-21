@@ -14,6 +14,3 @@ else
   echo "Greenbone couldn't be found. There's probably something wrong"
   exit 1
 fi
-
-
-

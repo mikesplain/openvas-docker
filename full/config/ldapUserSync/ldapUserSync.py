@@ -10,7 +10,7 @@ import sys
 import getopt
 import shlex
 import subprocess
-from sets import Set 
+from sets import Set
 from config import config
 from os import environ
 
@@ -31,7 +31,7 @@ host = get_config('ldap_host')
 bindDN = get_config('ldap_bind_dn')
 baseDN = get_config('ldap_base_dn')
 ldapFilter = get_config('ldap_admin_filter')
-ldapPwd = get_config('ldap_password') 
+ldapPwd = get_config('ldap_password')
 
 # OpenVAS configuration
 ovUser = 'admin'
@@ -61,7 +61,7 @@ def main(argv=None):
             opts, args = getopt.getopt(argv[1:], "hv:H:D:b:w:f:u:W:", ["help",  "host=", "bind=", "base=", "ldap-pass=", "ldap-filter=", "username=", "password="])
         except getopt.error, msg:
             raise Usage(msg)
-    
+
         # option processing
         for option, value in opts:
             if option == "-v":
@@ -112,7 +112,7 @@ def getLdapUser():
             if line.find(uidAttrP) != -1 :
                 ldapUsers.add(line.split(uidAttrP)[1])
     return ldapUsers
-    
+
 def getOpenVasUsers():
     global ovUsers
     if len(ovUsers) == 0:
@@ -121,7 +121,7 @@ def getOpenVasUsers():
         for line in ovUsersCmdResponse.split('\n'):
             if len(line) > 0:
                 ovUsers.add(line)
-        
+
     return ovUsers
 
 def createUser(userName):
@@ -139,6 +139,6 @@ def syncUsers():
     ovUsers = getOpenVasUsers()
     usersToCreate = ldapUsers - ovUsers
     map(createUser, usersToCreate)
-    
+
 if __name__ == "__main__":
     sys.exit(main())

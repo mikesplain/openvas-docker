@@ -12,16 +12,18 @@ if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then
         ln -s "$WEB_KEY_FILE" /var/lib/openvas/private/CA/serverkey.pem
 fi
 
-redis-server /etc/redis/redis.conf
+if [ -n "$BUILD" ]; then
+  redis-server /etc/redis/redis.conf
 
-echo "Testing redis status..."
-X="$(redis-cli ping)"
-while  [ "${X}" != "PONG" ]; do
-        echo "Redis not yet ready..."
-        sleep 1
-        X="$(redis-cli ping)"
-done
-echo "Redis ready."
+  echo "Testing redis status..."
+  X="$(redis-cli ping)"
+  while  [ "${X}" != "PONG" ]; do
+          echo "Redis not yet ready..."
+          sleep 1
+          X="$(redis-cli ping)"
+  done
+  echo "Redis ready."
+fi
 
 echo "Checking for empty volume"
 [ -e "$DATAVOL/tasks.db" ] || SETUPUSER=true
@@ -31,9 +33,10 @@ echo "Restarting services"
 /etc/init.d/openvas-manager restart
 /etc/init.d/openvas-gsa restart
 
-
-echo "Reloading NVTs"
-openvasmd --rebuild --progress
+if [ -n "$BUILD" ]; then
+  echo "Reloading NVTs"
+  openvasmd --rebuild --progress
+fi
 
 if [ -n "$SETUPUSER" ]; then
   echo "Setting up user"

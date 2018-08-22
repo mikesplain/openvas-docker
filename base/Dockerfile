@@ -1,16 +1,20 @@
+# Start by pulling down our existing container
+# to sync 1.9 Gb of data from OpenVAS.
+FROM mikesplain/openvas
+
 FROM ubuntu:16.04
 
+COPY --from=0 /var/lib/openvas /var/lib/openvas
+COPY config/redis.config.base /etc/redis/redis.config
 COPY config/sasl_passwd_template /
 COPY config/main.cf_template /
 COPY config/ldapUserSync/* /ldapUserSync/
-COPY start /start
+# TODO move copy back here
+# COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin \
     PUBLIC_HOSTNAME=openvas
-
-# Comment out to debug
-ENV COMMAND_OUTPUT="> /dev/null"
 
 RUN apt-get update && \
     apt-get install software-properties-common --no-install-recommends -yq && \
@@ -513,7 +517,11 @@ RUN wget -q https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-
     ln -s /opt/arachni/bin/* /usr/local/bin/ && \
     rm -rf arachni*
 
-RUN wget -q --no-check-certificate \
+# TODO: REMOVE THIS LATER
+COPY start /start
+
+RUN mkdir -p /var/run/redis && \
+    wget -q --no-check-certificate \
     https://svn.wald.intevation.org/svn/openvas/branches/tools-attic/openvas-check-setup \
       -O /openvas-check-setup && \
     chmod +x /openvas-check-setup && \
@@ -528,10 +536,9 @@ RUN wget -q --no-check-certificate \
     service openvas-scanner stop && \
     service openvas-manager stop && \
     service openvas-gsa stop && \
-
+    service redis-server stop
 
 ENV BUILD=""
-
 CMD /start
 
 EXPOSE 443 9390

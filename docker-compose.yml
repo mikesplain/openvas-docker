@@ -8,15 +8,16 @@ services:
       - "443"
     volumes:
     - redis:/var/run/redis
-      # - "./data/openvas:/var/lib/openvas/mgr/"
     environment:
       # CHANGE THIS !
       OV_PASSWORD: admin
   redis:
-    image: redis:alpine3.8
+    image: redis:4.0-stretch
     volumes:
-    - ./base/config/redis.config:/etc/redis/redis.config
+    - ./base/config/redis.config.compose:/etc/redis/redis.config
     - redis:/var/run/redis
+    command: /etc/redis/redis.config
+    entrypoint: redis-server
 
 volumes:
   redis:

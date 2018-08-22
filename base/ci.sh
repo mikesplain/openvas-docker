@@ -9,8 +9,9 @@ fi
 cd $(dirname $0)
 mkdir -p logs images
 
-docker build -t openvas9 .
-docker tag openvas9 quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
+docker build -t openvasv2 .
+docker tag openvasv2 quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}
+docker tag openvasv2 mikesplain/openvas:v2
 
 if [ -n "$QUAY_PASSWORD" ]; then
     docker push quay.io/mikesplain/openvas:travis-${TRAVIS_BUILD_ID}

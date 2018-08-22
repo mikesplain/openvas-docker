@@ -2,7 +2,8 @@ sudo: required
 services:
 - docker
 script:
-- full/ci.sh
+# - full/ci.sh
+- base/ci.sh
 
 notifications:
   slack:

@@ -13,17 +13,18 @@ if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then
 fi
 
 if [ -n "$BUILD" ]; then
+  echo "Startin Redis for build"
   redis-server /etc/redis/redis.conf
-
-  echo "Testing redis status..."
-  X="$(redis-cli ping)"
-  while  [ "${X}" != "PONG" ]; do
-          echo "Redis not yet ready..."
-          sleep 1
-          X="$(redis-cli ping)"
-  done
-  echo "Redis ready."
 fi
+
+echo "Testing redis status..."
+X="$(redis-cli -s /var/run/redis/redis.sock ping)"
+while  [ "${X}" != "PONG" ]; do
+        echo "Redis not yet ready..."
+        sleep 1
+        X="$(redis-cli -s /var/run/redis/redis.sock ping)"
+done
+echo "Redis ready."
 
 echo "Checking for empty volume"
 [ -e "$DATAVOL/tasks.db" ] || SETUPUSER=true

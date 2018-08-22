@@ -4,8 +4,8 @@ services:
     build: ./base
     image: mikesplain/openvas
     hostname: openvas
-    expose:
-      - "443"
+    ports:
+      - "443:443"
     volumes:
     - redis:/var/run/redis
     environment:

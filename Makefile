@@ -70,8 +70,8 @@ full: # Builds, tags and pushes the full image
 .PHONY: test-base
 test-base: # Tests the base build
 	@echo "Starting testing container"
-	@COMPOSEIMAGE="${DOCKER_REPOSITORY}/${IMAGE}:base${TAG}" docker-compose -f docker-compose.yml -f base/docker-compose.test.yml pull
-	@COMPOSEIMAGE="${DOCKER_REPOSITORY}/${IMAGE}:base${TAG}" docker-compose -f docker-compose.yml -f base/docker-compose.test.yml up -d
+	@COMPOSEIMAGE="${DOCKER_REPOSITORY}/${IMAGE}:base${TAG}" docker-compose -f docker-compose.yml -f base/docker-compose.travis.yml pull
+	@COMPOSEIMAGE="${DOCKER_REPOSITORY}/${IMAGE}:base${TAG}" docker-compose -f docker-compose.yml -f base/docker-compose.travis.yml up -d
 	@CONTAINER=openvasdocker_openvas_1 $(MAKE) test-live
 	@CONTAINER=openvasdocker_openvas_1 $(MAKE) test-curl
 

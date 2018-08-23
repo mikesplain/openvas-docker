@@ -4,6 +4,14 @@ services:
 script:
 # - full/ci.sh
 - base/ci.sh
+jobs:
+  include:
+    - stage: build
+      script: make base
+    - script: make full
+    - stage: test
+      script: make test-base
+    - script: make test-full
 
 notifications:
   slack:

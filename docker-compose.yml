@@ -1,8 +1,6 @@
 version: '3'
 services:
   openvas:
-    build: ./base
-    image: mikesplain/openvas:v2
     hostname: openvas
     ports:
       - "443:443"

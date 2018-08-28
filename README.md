@@ -6,9 +6,10 @@ OpenVAS image for Docker
 A Docker container for OpenVAS on Ubuntu.  By default, the latest images includes the OpenVAS Base as well as the NVTs and Certs required to run OpenVAS.  We made the decision to move to 9 as the default branch since 8 seems to have [many issues](https://github.com/mikesplain/openvas-docker/issues/84) in docker.  We suggest you use 9 as it is much more stable. Our Openvas9 build was designed to be a smaller image with fewer extras built in. Please note, OpenVAS 8 is no longer being built as OpenVAS 9 is now standard.  The image is can still be pulled from the Docker hub, however the source has been removed in this github as is standard with deprecated Docker Images.
 
 
-| Openvas Version | Tag     | Web UI Port |
-|-----------------|---------|-------------|
-| 9               | latest/9| 443        |
+| Openvas Version | Docker Tag | Web UI Port | Git Branch | Test Status |
+|-----------------|------------|-------------|------------|-------------|
+| 9               |  latest/9  | 443         |   master   | [![Travis CI](https://img.shields.io/travis/mikesplain/openvas-docker/master.svg)](https://travis-ci.org/mikesplain/openvas-docker/branches) |
+| 9               |    v2      | 443         |     v2     | [![Build Status](https://img.shields.io/travis/mikesplain/openvas-docker/v2.svg)](https://travis-ci.org/mikesplain/openvas-docker/branches) |
 
 
 

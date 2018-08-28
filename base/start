@@ -14,7 +14,7 @@ fi
 
 if [ -n "$BUILD" ]; then
   echo "Startin Redis for build"
-  redis-server /etc/redis/redis.conf
+  redis-server /etc/redis/redis.config
 fi
 
 echo "Testing redis status..."

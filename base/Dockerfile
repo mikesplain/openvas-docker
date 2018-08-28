@@ -21,34 +21,42 @@ RUN apt-get update && \
     apt-get clean && \
     apt-get update && \
     apt-get install alien \
-    bzip2 \
-    curl \
-    dirb \
-    dnsutils \
-    libopenvas9-dev \
-    libsasl2-modules \
-    net-tools \
-    nikto \
-    nmap \
-    nsis \
-    postfix \
-    openssh-client \
-    openvas9 \
-    rpm \
-    rsync \
-    redis \
-    redis-server \
-    smbclient \
-    socat \
-    sqlite3 \
-    sshpass \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-latex-recommended \
-    # w3af \
-    wapiti \
-    wget \
-    ldap-utils \
+        bzip2 \
+        curl \
+        dirb \
+        dnsutils \
+        libopenvas9-dev \
+        libsasl2-modules \
+        net-tools \
+        nikto \
+        nmap \
+        nsis \
+        postfix \
+        openssh-client \
+        openvas9 \
+        rpm \
+        rsync \
+        redis \
+        redis-server \
+        smbclient \
+        socat \
+        sqlite3 \
+        sshpass \
+        texlive-latex-base \
+        texlive-latex-extra \
+        texlive-latex-recommended \
+        # w3af \
+        wapiti \
+        wget \
+        ldap-utils \
+    -yq && \
+    apt-get purge \
+        texlive-pstricks-doc \
+        texlive-pictures-doc \
+        texlive-latex-extra-doc \
+        texlive-latex-base-doc \
+        texlive-latex-recommended-doc \
+        software-properties-common \
     -yq && \
     rm -rf /var/lib/apt/lists/*
 

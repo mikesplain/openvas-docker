@@ -1,0 +1,39 @@
+debug = false
+insecureSkipVerify = true # Needed for HTTPS backend to GSA
+
+[accessLog]
+
+[api]
+  entryPoint = "traefik"
+  dashboard = true
+
+logLevel = "INFO"
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+    minVersion = "VersionTLS12"
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "test@example.com" # Your ACME email
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+[acme.dnsChallenge]
+  provider = "cloudflare" # Whoever your provider is
+  resolvers = ["1.1.1.1:53", "8.8.8.8:53"] # Fixes issues for companies with internal DNS
+[[acme.domains]]
+  main = "test.example.com" # Your OpenVAS FQDN

@@ -15,7 +15,8 @@ services:
       - openvas
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik:/traefik
+      - ./traefik/traefik.toml:/traefik.toml
+      - ./traefik/acme.json:/acme.json
     container_name: traefik
   openvas:
       restart: always

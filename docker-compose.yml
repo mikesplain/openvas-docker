@@ -19,7 +19,7 @@ services:
     container_name: traefik
   openvas:
       restart: always
-      image: docker.corp.atlantic.net/devops/openvas-docker
+      image: mikesplain/openvas
       hostname: openvas
       expose:
         - "443"

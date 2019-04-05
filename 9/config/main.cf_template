@@ -7,3 +7,4 @@ smtp_sasl_security_options = noanonymous
 smtp_use_tls = yes
 relayhost = [$OV_SMTP_HOSTNAME]:$OV_SMTP_PORT
 mynetworks = 0.0.0.0/0
+sender_canonical_maps = hash:/etc/postfix/sender_canonical

@@ -7,12 +7,14 @@ FROM ubuntu:16.04
 COPY --from=0 /var/lib/openvas /var/lib/openvas
 COPY config/redis.config /etc/redis/redis.config
 COPY config/sasl_passwd_template /
+COPY config/sender_canonical_template /
 COPY config/main.cf_template /
 COPY config/ldapUserSync/* /ldapUserSync/
 COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin \
+    OV_SMTP_SENDER=root@openvas.localdomain \
     PUBLIC_HOSTNAME=openvas
 
 RUN apt-get update && \

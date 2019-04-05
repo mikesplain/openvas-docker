@@ -77,7 +77,7 @@ fi
 #
 # LDAP configuration (optional)
 #
-# Varaibles:
+# Variables:
 # - LDAP_HOST
 # - LDAP_BIND_DN
 # - LDAP_BASE_DN 
@@ -99,7 +99,7 @@ fi
 echo "Checking setup"
 ./openvas-check-setup --v9
 
-if [ -f /sasl_passwd_template ]; then
+if [ -n "$OV_SMTP_HOSTNAME" ]; then
   echo "Configuring postfix"
 
   set -o nounset
@@ -107,11 +107,14 @@ if [ -f /sasl_passwd_template ]; then
   set -o pipefail
 
   envsubst < "/sasl_passwd_template" > "/etc/postfix/sasl_passwd"
+  envsubst < "/sender_canonical_template" > "/etc/postfix/sender_canonical"
   envsubst < "/main.cf_template" > "/etc/postfix/main.cf"
 
   /usr/sbin/postmap /etc/postfix/sasl_passwd
+  /usr/sbin/postmap /etc/postfix/sender_canonical
 
   service postfix restart
+
 fi
 
 if [ -z "$BUILD" ]; then

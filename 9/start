@@ -5,7 +5,7 @@ OV_PASSWORD=${OV_PASSWORD:-admin}
 WEB_CERT_FILE=${WEB_CERT_FILE:-""}
 WEB_KEY_FILE=${WEB_KEY_FILE:-""}
 
-if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then 
+if [ ! -z "$WEB_CERT_FILE" -a ! -z "$WEB_KEY_FILE" ]; then
         rm -f /var/lib/openvas/CA/servercert.pem
         rm -f /var/lib/openvas/private/CA/serverkey.pem
         ln -s "$WEB_CERT_FILE" /var/lib/openvas/CA/servercert.pem
@@ -80,11 +80,11 @@ fi
 # Varaibles:
 # - LDAP_HOST
 # - LDAP_BIND_DN
-# - LDAP_BASE_DN 
+# - LDAP_BASE_DN
 # - LDAP_AUTH_DN
 # - LDAP_ADMIN_FILTER
 # - LDAP_PASSWORD
-# - LDAP_USERNAME_ATTR 
+# - LDAP_USERNAME_ATTR
 if [ -n "$LDAP_HOST" ] &&
     [ -n "$LDAP_BIND_DN" ] &&
     [ -n "$LDAP_BASE_DN" ] &&
@@ -108,6 +108,8 @@ if [ -f /sasl_passwd_template ]; then
 
   envsubst < "/sasl_passwd_template" > "/etc/postfix/sasl_passwd"
   envsubst < "/main.cf_template" > "/etc/postfix/main.cf"
+
+  postalias /etc/postfix/sasl_passwd
 
   /usr/sbin/postmap /etc/postfix/sasl_passwd
 

@@ -41,6 +41,7 @@ services:
         WEBROOT_PATH: /tmp/letsencrypt
         EXP_LIMIT: 30
         CHECK_FREQ: 30
+        STAGING: 1
   openvas:
       restart: always
       image: mikesplain/openvas
@@ -52,6 +53,7 @@ services:
       environment:
         # CHANGE THIS !
         OV_PASSWORD: securepassword41
+        #PUBLIC_HOSTNAME: example.com
       labels:
          deck-chores.dump.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress"
          deck-chores.dump.interval: daily

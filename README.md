@@ -100,8 +100,8 @@ To run:
   * [docker-compose.yml](docker-compose.yml)
   * [conf/nginx.conf](conf/nginx.conf)
   * [conf/nginx_ssl.conf](conf/nginx_ssl.conf)
-* Add the PUBLIC_HOSTNAME directive inside Openvas -> Environment definition with your hostname
-* Add the "STAGING: 0" directive inside Letsencrypt -> Ennvironment definition in order to get a real Letsencrypt certificate.
+* Uncomment PUBLIC_HOSTNAME and set it to your real hostname
+* Change "STAGING" to 1 oncee you're sure your deploy is OK, in order to get real certs.
 * Change the "OV_PASSWORD" enviromental variable in [docker-compose.yml](docker-compose.yml)
 * Install the latest [docker-compose](https://docs.docker.com/compose/install/)
 * run `docker-compose up -d`

@@ -101,7 +101,7 @@ To run:
   * [conf/nginx.conf](conf/nginx.conf)
   * [conf/nginx_ssl.conf](conf/nginx_ssl.conf)
 * Uncomment PUBLIC_HOSTNAME and set it to your real hostname
-* Change "STAGING" to 1 oncee you're sure your deploy is OK, in order to get real certs.
+* Change "STAGING" to 0 oncee you're sure your deploy is OK, in order to get real certs.
 * Change the "OV_PASSWORD" enviromental variable in [docker-compose.yml](docker-compose.yml)
 * Install the latest [docker-compose](https://docs.docker.com/compose/install/)
 * run `docker-compose up -d`

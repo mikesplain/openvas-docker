@@ -49,11 +49,19 @@ services:
       expose:
         - "443"
       volumes:
-        - "./data/openvas:/var/lib/openvas/mgr/"
+        - ./data/openvas:/var/lib/openvas/mgr/
+        #- ./conf/openvas-gsa:/etc/default/openvas-gsa
       environment:
         # CHANGE THIS !
-        OV_PASSWORD: securepassword41
+        SETUPUSER: "true"
+        OV_PASSWORD: 123mambomygoodpass
+        #DOMING CONFIG
         #PUBLIC_HOSTNAME: example.com
+        #SMPT CONFIG
+        #OV_SMTP_HOSTNAME: smtp.myfancydomain.com
+        #OV_SMTP_PORT: 587
+        #OV_SMTP_USERNAME: me@myfancydomain.com
+        #OV_SMTP_KEY: 123mambomygoodpass
       labels:
          deck-chores.dump.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress"
          deck-chores.dump.interval: daily

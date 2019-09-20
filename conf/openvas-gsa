@@ -1,0 +1,86 @@
+# Defaults for Greenbone Security Assistant initscript
+# sourced by /etc/init.d/openvas-gsa
+# installed at /etc/default/openvas-gsa by the maintainer scripts
+
+# For more information see `man gsad`
+
+# To run in foreground
+#
+#FOREGROUND=1
+
+# To disable HTTPS:
+#
+#HTTP_ONLY=1
+
+# To allow <host> as hostname/address part of a Host header:
+#
+#ALLOW_HEADER_HOST=example.com
+
+# To set listening address:
+# 
+#LISTEN_ADDRESS="0.0.0.0"
+
+# To set listening port number:
+#
+PORT_NUMBER=443
+
+# To set manager address
+#
+#MANAGER_ADDRESS="127.0.0.1"
+
+# To set manager port number
+#
+#MANAGER_PORT_NUMBER=9390
+
+# To set HTTP redirect port number
+#
+#REDIRECT_PORT=
+
+# To enable http redirection:
+#
+#HTTP_REDIRECT=1
+
+# To set SSL private key path
+#
+#SSL_PRIVATE_KEY=
+
+# To set SSL certificate path
+#
+#SSL_CERTIFICATE=
+
+# To set chroot
+#
+#DO_CHROOT=1
+
+# To set GNUTLS priorities string
+#
+#GNUTLS_PRIORITIES=
+
+# To set Diffie-Hellman parameters file path
+#
+#DH_PARAMS=
+
+# To set unix socket file path
+#
+#UNIX_SOCKET=
+
+# To set verbose
+#
+#VERBOSE=1
+
+# To set HTTP frame options string
+#
+#HTTP_FRAME_OPTS=
+
+# To set HTTP csp header string
+#
+#HTTP_CSP=
+
+# To set HSTS header
+#
+#HTTP_STS=1
+
+# To set HSTS max-age time (seconds)
+#
+#HTTP_STS_MAX_AGE=31536000
+

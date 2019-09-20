@@ -50,7 +50,7 @@ services:
         - "443"
       volumes:
         - ./data/openvas:/var/lib/openvas/mgr/
-        #- ./conf/openvas-gsa:/etc/default/openvas-gsa
+        - ./conf/openvas-gsa:/etc/default/openvas-gsa
       environment:
         # CHANGE THIS !
         SETUPUSER: "true"

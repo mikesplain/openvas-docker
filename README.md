@@ -118,6 +118,14 @@ To configure the postfix server, provide the following env variables at runtime:
 docker run -d -p 443:443 -e OV_SMTP_HOSTNAME=smtp.example.com -e OV_SMTP_PORT=587 -e OV_SMTP_USERNAME=username@example.com -e OV_SMTP_KEY=g0bBl3de3Go0k --name openvas mikesplain/openvas
 ```
 
+#### Troubleshooting
+
+```
+"The request contained an unknown or invalid Host header. If you are trying to access GSA via its hostname or a proxy, make sure GSA is set up to allow it."
+```
+
+Change the ALLOW_HEADER_HOST in config/openvas-gsa to allow host requests on headers.
+
 
 Contributing
 ------------

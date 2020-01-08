@@ -54,6 +54,8 @@ services:
         OV_SMTP_PORT: 587
         OV_SMTP_USERNAME: scanner@mg.twinhelix.co.uk
         OV_SMTP_KEY: 139328732d4f4f7e1197030b5e7136ca-713d4f73-38510009
+        VIRTUAL_PROTO: https
+        VIRTUAL_PORT: 443
       labels:
          deck-chores.syncupdate.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress; greenbone-certdata-sync; greenbone-scapdata-sync; openvasmd --update --verbose --progress; /etc/init.d/openvas-manager restart; /etc/init.d/openvas-scanner restart"
          deck-chores.syncupdate.interval: daily

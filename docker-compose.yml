@@ -36,8 +36,8 @@ services:
       links:
         - nginx
       environment:
-        DOMAINS: example.com
-        EMAIL: webmaster@example.com
+        DOMAINS: scanner.security.twinhelix.co.uk
+        EMAIL: security@twinhelix.co.uk
         WEBROOT_PATH: /tmp/letsencrypt
         EXP_LIMIT: 30
         CHECK_FREQ: 30
@@ -51,10 +51,10 @@ services:
         - "./data/openvas:/var/lib/openvas/mgr/"
       environment:
         # CHANGE THIS !
-        OV_PASSWORD: securepassword41
+        OV_PASSWORD: ohthaeg6zi2Kae>mi]d
       labels:
-         deck-chores.dump.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress"
-         deck-chores.dump.interval: daily
+         deck-chores.syncupdate.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress; greenbone-certdata-sync; greenbone-scapdata-sync; openvasmd --update --verbose --progress; /etc/init.d/openvas-manager restart; /etc/init.d/openvas-scanner restart"
+         deck-chores.syncupdate.interval: daily
   # Daily updates to openvas
   cron:
       restart: always

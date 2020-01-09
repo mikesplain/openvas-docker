@@ -1,4 +1,5 @@
 version: '3'
+# Please remember to find and replace any values below inbetween < > and in ALLCAPS
 
 services:
 
@@ -23,7 +24,7 @@ services:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: nginx-proxy-le
     environment:
-      - "DEFAULT_EMAIL=systems@twinhelix.co.uk"
+      - "DEFAULT_EMAIL=<EMAIL_ADDRESS_FOR_LETSENCRYPT>"
       - "NGINX_PROXY_CONTAINER=nginx-proxy"
 
     volumes:
@@ -46,18 +47,18 @@ services:
       volumes:
         - openvas_data:/var/lib/openvas/mgr
       environment:
-        OV_PASSWORD: ohthaeg6zi2Kae>mi]d
-        VIRTUAL_HOST: scanner.twinhelix.co.uk
-        PUBLIC_HOSTNAME: scanner.twinhelix.co.uk
-        LETSENCRYPT_HOST: scanner.twinhelix.co.uk
-        OV_SMTP_HOSTNAME: smtp.eu.mailgun.org
+        OV_PASSWORD: <CHANGE_TO_REAL_PASSWORD>
+        VIRTUAL_HOST: <SET_TO_FQDN_OF_INSTANCE>
+        PUBLIC_HOSTNAME: <SET_TO_FQDN_OF_INSTANCE>
+        LETSENCRYPT_HOST: <SET_TO_FQDN_OF_INSTANCE>
+        OV_SMTP_HOSTNAME: <SMTP_HOSTNAME>
         OV_SMTP_PORT: 587
-        OV_SMTP_USERNAME: scanner@mg.twinhelix.co.uk
-        OV_SMTP_KEY: 139328732d4f4f7e1197030b5e7136ca-713d4f73-38510009
-        VIRTUAL_PROTO: https
+        OV_SMTP_USERNAME: <SMTP_USERNAME>
+        OV_SMTP_KEY: <SMTP_PASSWORD>
+        VIRTUAL_PROTO: https # Required by nginx-proxy-le because gsad presents on port 443/https
         VIRTUAL_PORT: 443
       labels:
-         deck-chores.syncupdate.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress; greenbone-certdata-sync; greenbone-scapdata-sync; openvasmd --update --verbose --progress; /etc/init.d/openvas-manager restart; /etc/init.d/openvas-scanner restart"
+         deck-chores.syncupdate.command: sh -c "greenbone-nvt-sync; openvasmd --rebuild --progress"
          deck-chores.syncupdate.interval: daily
       depends_on:
         - letsencrypt

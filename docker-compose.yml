@@ -47,9 +47,9 @@ services:
         - openvas_data:/var/lib/openvas/mgr
       environment:
         OV_PASSWORD: ohthaeg6zi2Kae>mi]d
-        VIRTUAL_HOST: scanner.security.twinhelix.co.uk
-        PUBLIC_HOSTNAME: scanner.security.twinhelix.co.uk
-        LETSENCRYPT_HOST: scanner.security.twinhelix.co.uk
+        VIRTUAL_HOST: scanner.twinhelix.co.uk
+        PUBLIC_HOSTNAME: scanner.twinhelix.co.uk
+        LETSENCRYPT_HOST: scanner.twinhelix.co.uk
         OV_SMTP_HOSTNAME: smtp.eu.mailgun.org
         OV_SMTP_PORT: 587
         OV_SMTP_USERNAME: scanner@mg.twinhelix.co.uk

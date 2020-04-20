@@ -517,10 +517,6 @@ RUN wget -q https://github.com/Arachni/arachni/releases/download/v1.5.1/arachni-
     rm -rf arachni*
 
 RUN mkdir -p /var/run/redis && \
-    wget -q --no-check-certificate \
-    https://raw.githubusercontent.com/kurobeats/OpenVas-Management-Scripts/master/openvas-check-setup \
-      -O /openvas-check-setup && \
-    chmod +x /openvas-check-setup && \
     sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="-a 0.0.0.0 --client-watch-interval=0"/' /etc/init.d/openvas-manager && \
     sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS="--mlisten 127.0.0.1 -m 9390 --gnutls-priorities=SECURE128:-AES-128-CBC:-CAMELLIA-128-CBC:-VERS-SSL3.0:-VERS-TLS1.0"/' /etc/init.d/openvas-gsa && \
     sed -i '/^\[ -n "$HTTP_STS_MAX_AGE" \]/a[ -n "$PUBLIC_HOSTNAME" ] && DAEMON_ARGS="$DAEMON_ARGS --allow-header-host=$PUBLIC_HOSTNAME"' /etc/init.d/openvas-gsa && \

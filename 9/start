@@ -96,8 +96,8 @@ then
   /ldapUserSync/ldapUserSync.py
 fi
 
-echo "Checking setup"
-./openvas-check-setup --v9
+echo "Checking certificates"
+openvas-manage-certs -V
 
 if [ -f /sasl_passwd_template ]; then
   echo "Configuring postfix"

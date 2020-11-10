@@ -2,7 +2,7 @@
 # to sync 1.9 Gb of data from OpenVAS.
 FROM mikesplain/openvas
 
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 COPY --from=0 /var/lib/openvas /var/lib/openvas
 COPY config/redis.config /etc/redis/redis.config

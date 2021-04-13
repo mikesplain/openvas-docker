@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv sh
+s6-setuidgid postgres /usr/lib/postgresql/12/bin/postgres -D /etc/postgresql/12/main

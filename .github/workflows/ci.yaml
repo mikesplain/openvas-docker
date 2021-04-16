@@ -39,8 +39,6 @@ jobs:
             ghcr.io/mikesplain/openvas:develop
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-          secrets: |
-            GIT_AUTH_TOKEN=${{ github.token }}
 
       -
         # Temp fix

@@ -35,6 +35,8 @@ ADD install-gvm3.sh /
 RUN /install-gvm3.sh
 ADD install-gvm4.sh /
 RUN /install-gvm4.sh
+ADD install-gvm5.sh /
+RUN /install-gvm5.sh
 USER root
 
 COPY rootfs /

@@ -1,3 +1,5 @@
 #!/usr/bin/with-contenv sh
 
+export PKG_CONFIG_PATH=/opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
+
 # s6-setuidgid gvm /opt/gvm/sbin/gvmd --osp-vt-update=/opt/gvm/var/run/ospd.sock

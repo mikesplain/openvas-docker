@@ -29,14 +29,6 @@ RUN /install.sh
 ADD install-gvm.sh /
 USER gvm
 RUN /install-gvm.sh
-ADD install-gvm2.sh /
-RUN /install-gvm2.sh
-ADD install-gvm3.sh /
-RUN /install-gvm3.sh
-ADD install-gvm4.sh /
-RUN /install-gvm4.sh
-ADD install-gvm5.sh /
-RUN /install-gvm5.sh
 USER root
 
 RUN chown gvm:gvm /var/run/redis/ && \

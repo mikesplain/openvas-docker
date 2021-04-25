@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # TODO: Figure out which of these is correct
 export PKG_CONFIG_PATH=/opt/gvm/lib:/opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
 
@@ -28,10 +30,10 @@ make install
 
 # Sync
 # TODO: Uncomment
-/opt/gvm/bin/greenbone-nvt-sync
+chown -R gvm:gvm /opt/gvm
+sudo su - gvm /opt/gvm/bin/greenbone-nvt-sync
 
-
-/opt/gvm/sbin/openvas --update-vt-info
+sudo su - gvm /opt/gvm/sbin/openvas --update-vt-info
 
 cd /tmp/gvm-source/gvmd
 mkdir build
@@ -49,11 +51,12 @@ make install
 
 ldconfig
 
-/opt/gvm/bin/gvm-manage-certs -a
+chown -R gvm:gvm /opt/gvm
+sudo su - gvm /opt/gvm/bin/gvm-manage-certs -a
 
 # Feed Sync
 # TODO: Uncomment
-/opt/gvm/sbin/greenbone-feed-sync --type SCAP
+sudo su - gvm /opt/gvm/sbin/greenbone-feed-sync --type SCAP
 
 # ospd
 PY3VER=`python3 --version | grep -o [0-9]\.[0-9]`

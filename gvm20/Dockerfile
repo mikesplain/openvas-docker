@@ -22,14 +22,16 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-
 RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
 ENTRYPOINT ["/init"]
 
+ENV PATH /opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:$PATH
+
 ADD install.sh /
 RUN /install.sh
 
 # TODO: Move to install.sh
 ADD install-gvm.sh /
-USER gvm
+# USER gvm
 RUN /install-gvm.sh
-USER root
+# USER root
 RUN ldconfig
 
 RUN chown gvm:gvm /var/run/redis/ && \
@@ -48,6 +50,5 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1
 RUN updatedb
 ENV S6_KILL_GRACETIME 0
 ENV PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
-ENV PATH /opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:$PATH
 # TODO: Add non-root support
 # USER gvm

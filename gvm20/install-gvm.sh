@@ -28,7 +28,7 @@ make install
 
 # Sync
 # TODO: Uncomment
-# /opt/gvm/bin/greenbone-nvt-sync
+/opt/gvm/bin/greenbone-nvt-sync
 
 
 /opt/gvm/sbin/openvas --update-vt-info
@@ -53,7 +53,7 @@ ldconfig
 
 # Feed Sync
 # TODO: Uncomment
-# /opt/gvm/sbin/greenbone-feed-sync --type SCAP
+/opt/gvm/sbin/greenbone-feed-sync --type SCAP
 
 # ospd
 PY3VER=`python3 --version | grep -o [0-9]\.[0-9]`

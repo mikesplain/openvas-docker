@@ -34,4 +34,6 @@ git clone https://github.com/greenbone/gvm-tools.git
 
 chown -R gvm:gvm .
 
+sed -i 's|PATH="|PATH="/opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:|g' /etc/environment
+
 # Insert install-gvm.sh here

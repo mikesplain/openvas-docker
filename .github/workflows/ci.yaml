@@ -1,6 +1,9 @@
 name: ci
 
 on:
+  schedule:
+    # Run daily at 6:22am
+    - cron:  '22 10 * * *'
   push:
     branches:
       - 'develop'

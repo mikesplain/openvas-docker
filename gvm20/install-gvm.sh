@@ -33,7 +33,7 @@ make install
 chown -R gvm:gvm /opt/gvm
 sudo su - gvm /opt/gvm/bin/greenbone-nvt-sync
 
-sudo su - gvm /opt/gvm/sbin/openvas --update-vt-info
+sudo su - gvm sh -c "/opt/gvm/sbin/openvas --update-vt-info"
 
 cd /tmp/gvm-source/gvmd
 mkdir build

@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+# s6-setuidgid gvm gsad /opt/gvm/sbin/gsad

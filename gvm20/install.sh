@@ -19,13 +19,6 @@ apt-get install postgresql postgresql-contrib postgresql-server-dev-all -yq
 mkdir -p /etc/postgresql/data /var/log/postgresql
 chown postgres:postgres /etc/postgresql/data /var/log/postgresql
 
-sudo -Hiu postgres createuser gvm
-sudo -Hiu postgres createdb -O gvm gvmd
-sudo -Hiu postgres psql -c 'create role dba with superuser noinherit;' gvmd
-sudo -Hiu postgres psql -c 'grant dba to gvm;' gvmd
-sudo -Hiu postgres psql -c 'create extension "uuid-ossp";' gvmd
-sudo -Hiu postgres psql -c 'create extension "pgcrypto";' gvmd
-
 mkdir -p /tmp/gvm-source /opt/gvm /var/run/redis
 cd /tmp/gvm-source
 

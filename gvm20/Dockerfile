@@ -37,6 +37,10 @@ RUN chown gvm:gvm /var/run/redis/ && \
 
 COPY rootfs /
 
+# Setup stuff like postgres
+ADD setup.sh /
+RUN /setup.sh
+
 # TODO: Remove after Dev
 RUN updatedb
 ENV S6_KILL_GRACETIME 0; \

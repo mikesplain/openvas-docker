@@ -20,6 +20,9 @@ mkdir -p /etc/postgresql/data /var/log/postgresql
 chown postgres:postgres /etc/postgresql/data /var/log/postgresql
 
 mkdir -p /tmp/gvm-source /opt/gvm /var/run/redis
+
+echo "db_address = /run/redis-openvas/redis.sock" > /opt/gvm/etc/openvas/openvas.conf ;\
+
 cd /tmp/gvm-source
 
 git clone -b gvm-libs-20.08 https://github.com/greenbone/gvm-libs.git

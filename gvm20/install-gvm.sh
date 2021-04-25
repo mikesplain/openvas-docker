@@ -49,6 +49,8 @@ make install
 
 ldconfig
 
+/opt/gvm/bin/gvm-manage-certs -a
+
 # Feed Sync
 # TODO: Uncomment
 # /opt/gvm/sbin/greenbone-feed-sync --type SCAP
@@ -60,7 +62,9 @@ export PYTHONPATH=/opt/gvm/lib/python$PY3VER/site-packages
 
 cd /tmp/gvm-source/ospd
 python3 setup.py install --prefix=/opt/gvm
+pip3 install --system .
 cd ../ospd-openvas
 python3 setup.py install --prefix=/opt/gvm
+pip3 install --system .
 
 mkdir -p /opt/gvm/var/run/

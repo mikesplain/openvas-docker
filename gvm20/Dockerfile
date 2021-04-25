@@ -33,17 +33,21 @@ USER root
 RUN ldconfig
 
 RUN chown gvm:gvm /var/run/redis/ && \
-  chmod 775 -R /etc/postgresql
-
-COPY rootfs /
+  chmod 775 -R /etc/postgresql && \
+  chown -R gvm:gvm /opt/gvm
 
 # Setup stuff like postgres
 ADD setup.sh /
 RUN /setup.sh
 
+COPY rootfs /
+
+ENV S6_CMD_WAIT_FOR_SERVICES=1
+
 # TODO: Remove after Dev
 RUN updatedb
-ENV S6_KILL_GRACETIME 0; \
-    PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
+ENV S6_KILL_GRACETIME 0
+ENV PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
+ENV PATH /opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:$PATH
 # TODO: Add non-root support
 # USER gvm

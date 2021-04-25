@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 useradd -r -d /opt/gvm -c "GVM (OpenVAS) User" -s /bin/bash gvm
 mkdir /opt/gvm
 chown gvm:gvm /opt/gvm
@@ -17,7 +19,12 @@ apt-get install postgresql postgresql-contrib postgresql-server-dev-all -yq
 mkdir -p /etc/postgresql/data /var/log/postgresql
 chown postgres:postgres /etc/postgresql/data /var/log/postgresql
 
-# postgresql doesn't work yet, we'll come back to it.
+sudo -Hiu postgres createuser gvm
+sudo -Hiu postgres createdb -O gvm gvmd
+sudo -Hiu postgres psql -c 'create role dba with superuser noinherit;' gvmd
+sudo -Hiu postgres psql -c 'grant dba to gvm;' gvmd
+sudo -Hiu postgres psql -c 'create extension "uuid-ossp";' gvmd
+sudo -Hiu postgres psql -c 'create extension "pgcrypto";' gvmd
 
 mkdir -p /tmp/gvm-source /opt/gvm /var/run/redis
 cd /tmp/gvm-source

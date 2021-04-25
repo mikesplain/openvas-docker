@@ -30,6 +30,7 @@ ADD install-gvm.sh /
 USER gvm
 RUN /install-gvm.sh
 USER root
+RUN ldconfig
 
 RUN chown gvm:gvm /var/run/redis/ && \
   chmod 775 -R /etc/postgresql
@@ -38,7 +39,7 @@ COPY rootfs /
 
 # TODO: Remove after Dev
 RUN updatedb
-ENV S6_KILL_GRACETIME 0 \
+ENV S6_KILL_GRACETIME 0; \
     PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
 # TODO: Add non-root support
 # USER gvm

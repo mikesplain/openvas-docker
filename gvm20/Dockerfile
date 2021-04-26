@@ -22,31 +22,35 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-
 RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
 ENTRYPOINT ["/init"]
 
+ENV PATH /opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:$PATH
+
 ADD install.sh /
 RUN /install.sh
 
 # TODO: Move to install.sh
 ADD install-gvm.sh /
-USER gvm
+# USER gvm
 RUN /install-gvm.sh
-ADD install-gvm2.sh /
-RUN /install-gvm2.sh
-ADD install-gvm3.sh /
-RUN /install-gvm3.sh
-ADD install-gvm4.sh /
-RUN /install-gvm4.sh
-ADD install-gvm5.sh /
-RUN /install-gvm5.sh
-USER root
+# USER root
+RUN ldconfig
 
 RUN chown gvm:gvm /var/run/redis/ && \
-  chmod 775 -R /etc/postgresql
+  chmod 775 -R /etc/postgresql && \
+  chown -R gvm:gvm /opt/gvm
+
+# Setup stuff like postgres
+ADD setup.sh /
+RUN /setup.sh
+ADD sync.sh /
+RUN /sync.sh
 
 COPY rootfs /
 
+ENV S6_CMD_WAIT_FOR_SERVICES=1
+
 # TODO: Remove after Dev
 RUN updatedb
-ENV S6_KILL_GRACETIME 0 \
-    PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
+ENV S6_KILL_GRACETIME 0
+ENV PKG_CONFIG_PATH /opt/gvm/lib/pkgconfig:$PKG_CONFIG_PATH
 # TODO: Add non-root support
 # USER gvm

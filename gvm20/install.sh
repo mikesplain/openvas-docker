@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 useradd -r -d /opt/gvm -c "GVM (OpenVAS) User" -s /bin/bash gvm
 mkdir /opt/gvm
 chown gvm:gvm /opt/gvm
@@ -17,9 +19,11 @@ apt-get install postgresql postgresql-contrib postgresql-server-dev-all -yq
 mkdir -p /etc/postgresql/data /var/log/postgresql
 chown postgres:postgres /etc/postgresql/data /var/log/postgresql
 
-# postgresql doesn't work yet, we'll come back to it.
-
 mkdir -p /tmp/gvm-source /opt/gvm /var/run/redis
+
+mkdir -p /opt/gvm/etc/openvas
+echo "db_address = /run/redis-openvas/redis.sock" > /opt/gvm/etc/openvas/openvas.conf
+
 cd /tmp/gvm-source
 
 git clone -b gvm-libs-20.08 https://github.com/greenbone/gvm-libs.git
@@ -35,5 +39,7 @@ git clone https://github.com/greenbone/gvm-tools.git
 chown -R gvm:gvm .
 
 sed -i 's|PATH="|PATH="/opt/gvm/bin:/opt/gvm/sbin:/opt/gvm/.local/bin:|g' /etc/environment
-
-# Insert install-gvm.sh here
+cat << EOF > /etc/ld.so.conf.d/gvm.conf
+# gmv libs location
+/opt/gvm/lib
+EOF

@@ -31,8 +31,9 @@ make install
 # Sync
 # TODO: Uncomment
 chown -R gvm:gvm /opt/gvm
-sudo su - gvm /opt/gvm/bin/greenbone-nvt-sync
+# sudo su - gvm /opt/gvm/bin/greenbone-nvt-sync
 
+# Newer scripts don't include this so maybe it can be skipped?
 # sudo su - gvm sh -c "/opt/gvm/sbin/openvas --update-vt-info"
 
 cd /tmp/gvm-source/gvmd
@@ -52,11 +53,11 @@ make install
 ldconfig
 
 chown -R gvm:gvm /opt/gvm
-sudo su - gvm /opt/gvm/bin/gvm-manage-certs -a
+# sudo su - gvm /opt/gvm/bin/gvm-manage-certs -a
 
 # Feed Sync
 # TODO: Uncomment
-sudo su - gvm /opt/gvm/sbin/greenbone-feed-sync --type SCAP
+# sudo su - gvm /opt/gvm/sbin/greenbone-feed-sync --type SCAP
 
 # ospd
 PY3VER=`python3 --version | grep -o [0-9]\.[0-9]`

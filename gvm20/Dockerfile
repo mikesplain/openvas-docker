@@ -41,6 +41,8 @@ RUN chown gvm:gvm /var/run/redis/ && \
 # Setup stuff like postgres
 ADD setup.sh /
 RUN /setup.sh
+ADD sync.sh /
+RUN /sync.sh
 
 COPY rootfs /
 

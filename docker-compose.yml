@@ -58,6 +58,6 @@ services:
   # Daily updates to openvas
   cron:
       restart: always
-      image: funkyfuture/deck-chores
+      image: funkyfuture/deck-chores:1.1.13
       volumes:
         - "/var/run/docker.sock:/var/run/docker.sock"

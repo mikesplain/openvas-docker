@@ -21,7 +21,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build the Docker image
-      run: docker build 9 --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/openvas:latest
+      run: docker build 9 --file 9/Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/openvas:latest
 
     - name: Login to DockerHub
       if: github.ref == 'refs/heads/master'

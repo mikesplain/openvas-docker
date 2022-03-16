@@ -13,10 +13,9 @@ COPY start /start
 
 ENV DEBIAN_FRONTEND=noninteractive \
     OV_PASSWORD=admin \
-    FEED=feed.community.greenbone.net \
-    COMMUNITY_NVT_RSYNC_FEED=rsync://$FEED:/nvt-feed \
-    COMMUNITY_CERT_RSYNC_FEED=rsync://$FEED:/cert-data \
-    COMMUNITY_SCAP_RSYNC_FEED=rsync://$FEED:/scap-data \
+    COMMUNITY_NVT_RSYNC_FEED=rsync://feed.community.greenbone.net:/nvt-feed \
+    COMMUNITY_CERT_RSYNC_FEED=rsync://feed.community.greenbone.net:/cert-data \
+    COMMUNITY_SCAP_RSYNC_FEED=rsync://feed.community.greenbone.net:/scap-data \
     PUBLIC_HOSTNAME=openvas
 
 RUN apt-get update && \

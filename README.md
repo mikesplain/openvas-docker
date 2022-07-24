@@ -45,7 +45,7 @@ To run bash inside the container run:
 docker exec -it openvas bash
 ```
 
-#docker deploy fast
+# docker deploy fast
 
 <code>docker pull mikesplain/openvas</code><br>
 <code>docker run -d -p 443:443 -p 9390:9390 --name openvas mikesplain/openvas</code><br>

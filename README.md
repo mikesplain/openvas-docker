@@ -50,7 +50,7 @@ docker exec -it openvas bash
 <code>docker pull mikesplain/openvas</code><br>
 <code>docker run -d -p 443:443 -p 9390:9390 --name openvas mikesplain/openvas</code><br>
 
-<code>bash: docker exec -it openvas bash</code><br>
+<code>docker exec -it openvas bash</code><br>
 <code>apt update -y && apt install nano -y</code><br>
 <code>ifconfig</code><br>
 <code>nano /etc/default/openvas-gsa</code><br>

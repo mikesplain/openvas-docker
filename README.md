@@ -45,6 +45,20 @@ To run bash inside the container run:
 docker exec -it openvas bash
 ```
 
+#docker deploy fast
+
+<code>docker pull mikesplain/openvas</code><br>
+<code>docker run -d -p 443:443 -p 9390:9390 --name openvas mikesplain/openvas</code><br>
+
+<code>bash: docker exec -it openvas bash</code><br>
+<code>apt update -y && apt install nano -y</code><br>
+<code>ifconfig</code><br>
+<code>nano /etc/default/openvas-gsa</code><br>
+<code>ALLOW_HEADER_HOST=172.17.0.3</code><br>
+<code>/etc/init.d/openvas-gsa restart</code><br>
+<code>https://172.17.0.3/omp?cmd=get_tasks&token=2f359627-1ac1-41e3-8ab9-ab354d088bef</code><br>
+<code>Username: admin Password: admin</code><br>
+
 #### Specify DNS Hostname
 By default, the system only allows connections for the hostname "openvas".  To allow access using a custom DNS name, you must use this command:
 

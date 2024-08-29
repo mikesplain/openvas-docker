@@ -1,3 +1,13 @@
+## This has been deprecated
+
+Thanks to the many users over the years for continueing to develop and support this project. I originally built this container to solve a problem at work and I was amazed to see many other folks interested in using it as well.  With over 29 Million downloads from Docker hub, it's clear to me that it has had a good run, but as correctly pointed out in a number of issues such as [#271](https://github.com/mikesplain/openvas-docker/issues/271), there are better, supported solutions out there.  Thanks to all the support, contributions, and forks over the years.  And finally, thanks to the folks a Greenbone for a wonderful tool and fully supporting docker based deployments going forward.
+
+Please reference the [Greenbone Documentation](https://greenbone.github.io/docs/latest/) on how to utilize their [containers](https://hub.docker.com/u/greenbone). 
+
+Cheers 🍻
+Mike
+
+
 OpenVAS image for Docker
 ==============
 
